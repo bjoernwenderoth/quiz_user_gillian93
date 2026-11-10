@@ -17,7 +17,7 @@ Die lokale Adresse enthält den Projektpfad `/quiz_user_gillian93/`. Für die Pr
 
 Login → Identity Check → Mission Briefing → Fragen 1–5 → Halbzeit → Fragen 6–10 → Abschluss → Klick auf „GEWINN FREISCHALTEN“ → Entschlüsselung → Konzert-Reveal → zwei Geschenktickets.
 
-Der Login ist Teil der Inszenierung: Eine beliebige syntaktisch gültige E-Mail-Adresse und ein beliebiges nicht leeres Passwort funktionieren. Ein erfundenes Passwort verwenden. Die Felder werden weder gespeichert noch versendet. Es gibt keinen Server und keine echte Zugangskontrolle; die Fragen und Geschenkdetails sind im Frontend enthalten.
+Der Login wirkt wie ein echter Zugang, prüft aber nur im Browser gegen die Zugangsdaten in `access` (`src/features/quiz/content.ts`). Diese Daten bekommt Gillian mit der Einladung. Falsche Daten zeigen eine Fehlermeldung. Die Eingaben werden weder gespeichert noch versendet. Es gibt keinen Server und keine echte Zugangskontrolle; Fragen, Zugangsdaten und Geschenkdetails stehen im Frontend-Code.
 
 Falsche Antworten können erneut versucht werden und verraten die richtige Antwort nicht. Richtige Antworten erhöhen den Fortschritt und schalten die Aktion zur nächsten Frage frei. Der Ablauf hat kein Zeitlimit. Nach Frage 5 erscheint die Halbzeit. Nach der richtigen Antwort auf Frage 10 verblassen die übrigen Karten. Nach einem kurzen Erfolgsfeedback folgt automatisch „BERLIN LEBT“, dann die Bestätigung des letzten Schlüssels und erst danach die Freischaltaktion. Das Geschenk bleibt bis zum bewussten Freischalten verborgen.
 

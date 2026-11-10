@@ -47,7 +47,7 @@ export function CompletionScreen({ onUnlock }: { onUnlock: () => void }) {
     </div>
     <motion.div className="unlock-content" initial={{ opacity: 0 }} animate={{ opacity: stage >= 2 ? 1 : 0 }} transition={{ duration: reduced ? 0.1 : 0.5 }}>
       <p className="completion-count">10 / 10 Level abgeschlossen</p>
-      <p className="story-copy">Du hast alle Schlüssel gefunden.<br />Was dahinter liegt, gehört jetzt dir.</p>
+      <p className="story-copy">Du hast alle Schlüssel gefunden.</p>
       <AnimatedButton disabled={stage < 2} onClick={onUnlock}>GEWINN FREISCHALTEN <ArrowRight size={17} /></AnimatedButton>
     </motion.div>
   </ScreenTransition>

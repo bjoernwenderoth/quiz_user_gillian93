@@ -21,7 +21,7 @@ export function ResultScreen({ onTickets }: { onTickets: () => void }) {
     <motion.div className="reveal-light" aria-hidden="true" initial={{ opacity: 0 }} animate={{ opacity: reduced ? 0.2 : [0, 0.6, 0.2] }} transition={{ duration: reduced ? 0.1 : 2.5 }} />
     <motion.div className="reveal-content" initial="hidden" animate="visible" transition={{ delayChildren: reduced ? 0 : revealTiming.delay, staggerChildren: reduced ? 0 : revealTiming.stagger }}>
       <motion.div className="concert-art" aria-hidden="true" variants={arrival}>
-        <img src={assetUrl('images/questions/urban.jpg')} alt="" width="1200" height="800" />
+        <img src={assetUrl('images/questions/city.jpg')} alt="" width="1200" height="900" />
         <div className="concert-art-shade" />
         <span className="concert-three">3</span>
         <div className="concert-art-title"><span>BERLIN</span><span>LEBT.</span></div>

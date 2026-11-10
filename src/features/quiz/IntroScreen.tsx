@@ -8,7 +8,7 @@ export function IntroScreen({ onStart }: { onStart: () => void }) {
     <p className="story-lead">Zehn Fragen. Ein verborgenes Ziel.</p>
     <p className="story-copy">Beweise dein Wissen und entschlüssele PROJECT X.<br />Nimm dir Zeit. Jeder richtige Gedanke bringt dich näher.</p>
     <div className="mission-facts"><span><Check size={15} />10 Fragen</span><span><Check size={15} />Kein Zeitlimit</span><span><Check size={15} />Dein Geheimnis</span></div>
-    <AnimatedButton onClick={onStart}>CHALLENGE STARTEN <ArrowRight size={17} /></AnimatedButton>
+    <AnimatedButton onClick={onStart}>RÄTSEL STARTEN <ArrowRight size={17} /></AnimatedButton>
   </ScreenTransition>
 }
 

@@ -43,7 +43,7 @@ export function App() {
     {final && <MusicPlayer activated={musicActivated} onActivate={() => setMusicActivated(true)} />}
     <footer className="site-footer"><span>PROJECT X <span className="footer-divider">/</span> {final ? 'Ein Moment, der bleibt.' : 'Das Beste bleibt verborgen.'}</span><div className="footer-right">
       {state.screen === 'tickets' && <button className="text-button" onClick={restart}>Neu beginnen <ArrowUpRight size={14} /></button>}
-      <details className="help"><summary aria-label="So funktioniert PROJECT X"><HelpCircle size={17} /><span>Hinweise</span></summary><div className="help-content"><strong>Dein Zugang zu PROJECT X.</strong><p>Der Login gehört zur Inszenierung. Nutze eine beliebige gültige E-Mail-Adresse und ein erfundenes Passwort. Beides wird weder gespeichert noch versendet.</p><p>Zehn Fragen. Kein Zeitlimit. Falsche Antworten kannst du erneut versuchen. Dein Fortschritt bleibt nach Möglichkeit in diesem Browser-Tab erhalten.</p><p>Der Zugang ist simuliert und kein Schutz vertraulicher Inhalte.</p></div></details>
+      <details className="help"><summary aria-label="So funktioniert PROJECT X"><HelpCircle size={17} /><span>Hinweise</span></summary><div className="help-content"><strong>Dein Zugang zu PROJECT X.</strong><p>Melde dich mit der E-Mail-Adresse und dem Passwort aus deiner persönlichen Einladung an. Der Zugang ist nur für dich bestimmt.</p><p>Zehn Fragen. Kein Zeitlimit. Falsche Antworten kannst du erneut versuchen. Dein Fortschritt wird für diese Sitzung gespeichert.</p><p>Probleme beim Login? Wende dich an die Person, von der du deine Einladung erhalten hast.</p></div></details>
     </div></footer>
   </div>
 }

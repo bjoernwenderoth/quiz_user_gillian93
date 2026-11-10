@@ -1,6 +1,6 @@
 import { test, expect, type Page } from '@playwright/test'
 import { readFile } from 'node:fs/promises'
-import { questions } from '../src/features/quiz/content'
+import { access, questions } from '../src/features/quiz/content'
 
 async function capture(page: Page, name: string) {
   await page.evaluate(() => document.fonts.ready)
@@ -13,11 +13,11 @@ async function capture(page: Page, name: string) {
   await page.screenshot({ path: `.impeccable/review/${name}.png`, fullPage: true, animations: 'disabled' })
 }
 async function login(page: Page) {
-  await page.getByLabel('E-Mail-Adresse').fill('gillian@example.com')
-  await page.getByLabel('Passwort', { exact: true }).fill('ein-erfundenes-passwort')
+  await page.getByLabel('E-Mail-Adresse').fill(access.email)
+  await page.getByLabel('Passwort', { exact: true }).fill(access.password)
   await page.getByRole('button', { name: 'IDENTITÄT BESTÄTIGEN' }).click()
   await expect(page.getByRole('heading', { name: /DU WURDEST/ })).toBeVisible({ timeout: 8000 })
-  await page.getByRole('button', { name: 'CHALLENGE STARTEN' }).click()
+  await page.getByRole('button', { name: 'RÄTSEL STARTEN' }).click()
 }
 
 test('complete private journey, retries, recovery, reveal and real PNG download', async ({ page }, info) => {
@@ -33,8 +33,8 @@ test('complete private journey, retries, recovery, reveal and real PNG download'
   await page.getByRole('button', { name: 'IDENTITÄT BESTÄTIGEN' }).click()
   await expect(page.getByRole('alert').first()).toContainText('gültige E-Mail')
   await login(page)
-  expect(await page.evaluate(() => JSON.stringify(sessionStorage))).not.toContain('gillian@example.com')
-  expect(await page.evaluate(() => JSON.stringify(sessionStorage))).not.toContain('erfundenes-passwort')
+  expect(await page.evaluate(() => JSON.stringify(sessionStorage))).not.toContain(access.email)
+  expect(await page.evaluate(() => JSON.stringify(sessionStorage))).not.toContain(access.password)
   for (const [index, question] of questions.entries()) {
     await expect(page.getByRole('heading', { name: question.question, exact: true })).toBeVisible()
     const image = page.locator('.question-image img')
@@ -108,11 +108,15 @@ test('keyboard, reduced motion, blocked storage, and narrow layouts', async ({ p
     Object.defineProperty(window, 'sessionStorage', { get() { throw new Error('Storage blocked') } })
   })
   await page.goto('./')
-  await page.getByLabel('E-Mail-Adresse').fill('gillian@example.com')
-  await page.getByLabel('Passwort', { exact: true }).fill('x')
+  await page.getByLabel('E-Mail-Adresse').fill(access.email)
+  await page.getByLabel('Passwort', { exact: true }).fill('falsch')
+  await page.getByLabel('Passwort', { exact: true }).press('Enter')
+  await expect(page.getByRole('alert')).toContainText('nicht korrekt')
+  await expect(page.getByLabel('Passwort', { exact: true })).toBeFocused()
+  await page.getByLabel('Passwort', { exact: true }).fill(access.password)
   await page.getByLabel('Passwort', { exact: true }).press('Enter')
   await expect(page.getByRole('heading', { name: /DU WURDEST/ })).toBeVisible()
-  await page.getByRole('button', { name: 'CHALLENGE STARTEN' }).press('Enter')
+  await page.getByRole('button', { name: 'RÄTSEL STARTEN' }).press('Enter')
   await expect(page.getByRole('heading', { name: questions[0]!.question })).toBeFocused()
   await page.keyboard.press('Tab')
   await expect(page.getByRole('button', { name: 'A: Breakpoint' })).toBeFocused()

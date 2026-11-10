@@ -19,7 +19,7 @@ export function QuestionScreen({ question, index, selected, onAnswer, onNext }: 
     <ProgressIndicator completed={index + Number(correct)} total={questions.length} />
     <div className="question-layout">
       <div className="question-image">
-        <img src={assetUrl('images/questions/' + question.image)} alt={question.imageAlt} width="1200" height="900" fetchPriority="high" onError={(event) => { event.currentTarget.style.visibility = 'hidden' }} />
+        <img src={assetUrl('images/questions/' + question.image)} alt={question.imageAlt} style={{ objectPosition: question.imagePosition }} width="1200" height="900" fetchPriority="high" onError={(event) => { event.currentTarget.style.visibility = 'hidden' }} />
         <div className="image-overlay" />
         <span className="image-category">{question.category}</span>
         <span className="image-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>

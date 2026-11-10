@@ -70,8 +70,6 @@ main { flex: 1; display: flex; flex-direction: column; justify-content: center; 
 .login-copy { padding-block: 30px; }
 .login-copy h1 { font-size: clamp(42px, 4.6vw, 62px); line-height: 1.1; white-space: nowrap; }
 .private-access { font-size: 20px; color: var(--color-gold); margin-top: 10px; font-weight: 300; }
-.field-label { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
-.field-hint { color: var(--color-muted); font-size: 12px; }
 .login-intro { display: flex; align-items: center; gap: 9px; color: var(--color-muted); font-size: 12px; margin-top: 36px; }
 .login-form { margin-top: var(--space-group); }
 .field + .field { margin-top: 21px; }
@@ -87,6 +85,8 @@ main { flex: 1; display: flex; flex-direction: column; justify-content: center; 
 .login-form .primary-button { width: 100%; justify-content: space-between; margin-top: 26px; }
 .form-note { text-align: left; font-size: 12px; line-height: 1.7; color: var(--color-muted); margin-top: 16px; }
 .form-error { color: var(--color-negative); font-size: 12px; line-height: 1.7; margin-top: 15px; }
+.form-error-block { margin-top: 22px; padding: 12px 14px; border: 1px solid var(--color-wrong-border); background: var(--color-wrong-surface); border-radius: var(--radius-control); }
+.form-error-block + .primary-button { margin-top: 16px; }
 .access-art { position: relative; aspect-ratio: 0.85; align-self: stretch; display: flex; flex-direction: column; justify-content: center; }
 .access-frame { position: relative; aspect-ratio: 0.85; display: grid; place-items: center; overflow: hidden; border: 1px solid #5c5d48; background: radial-gradient(ellipse at 50% 70%, #46412d 0%, #282c21 40%, #1c1f19 80%); }
 .access-frame::before, .access-frame::after { content: ''; position: absolute; inset: 26px; border: 1px solid #7a765330; }
@@ -123,7 +123,7 @@ main { flex: 1; display: flex; flex-direction: column; justify-content: center; 
 .progress-ticks { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(10, 1fr); }
 .progress-ticks span { border-right: 3px solid var(--color-ground); }
 .question-layout { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(32px, 5vw, 72px); margin-top: var(--space-section); align-items: start; }
-.question-image { position: relative; aspect-ratio: 4 / 5; background: #292d27; overflow: hidden; border-radius: var(--radius-card); }
+.question-image { position: relative; aspect-ratio: 4 / 3; background: #292d27; overflow: hidden; border-radius: var(--radius-card); }
 .question-image img { width: 100%; height: 100%; position: absolute; object-fit: cover; filter: saturate(0.5) brightness(0.8); }
 .image-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, #17191600 35%, #171916c9 100%); }
 .image-category { position: absolute; left: 28px; bottom: 30px; font-size: 14px; }
@@ -176,12 +176,12 @@ main { flex: 1; display: flex; flex-direction: column; justify-content: center; 
 .reveal-screen { position: relative; width: 100%; max-width: 1040px; margin: auto; isolation: isolate; }
 .reveal-light { position: absolute; inset: -40px -20px 25%; background: radial-gradient(ellipse at 40% 35%, #b79c4a30, transparent 65%); pointer-events: none; z-index: -1; }
 .reveal-content { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 0 64px; align-items: center; }
-.concert-art { position: relative; grid-row: span 2; aspect-ratio: 4 / 5; overflow: hidden; background: #131815; border-radius: var(--radius-card); outline: 1px solid oklch(1 0 0 / 0.1); outline-offset: -1px; isolation: isolate; }
+.concert-art { position: relative; grid-row: span 2; aspect-ratio: 4 / 3; overflow: hidden; background: #131815; border-radius: var(--radius-card); outline: 1px solid oklch(1 0 0 / 0.1); outline-offset: -1px; isolation: isolate; }
 .concert-art img, .concert-art-shade { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
 .concert-art img { filter: saturate(0.25) brightness(0.6); }
-.concert-art-shade { background: linear-gradient(180deg, #12181315, #12181330 40%, #121813f2); }
-.concert-three { position: absolute; right: -0.02em; top: -0.15em; font-family: var(--font-display); font-weight: 750; font-size: clamp(300px, 39vw, 500px); line-height: 1; color: #dac49c30; }
-.concert-art-title { position: absolute; left: 8%; right: 8%; bottom: 19%; display: flex; flex-direction: column; font-family: var(--font-display); font-weight: 750; font-size: clamp(42px, 5.5vw, 72px); line-height: 0.95; letter-spacing: -0.04em; color: var(--color-gold); }
+.concert-art-shade { background: linear-gradient(180deg, #12181310, #12181326 45%, #121813f0); }
+.concert-three { position: absolute; right: -0.02em; top: -0.2em; font-family: var(--font-display); font-weight: 750; font-size: clamp(220px, 27vw, 360px); line-height: 1; color: #dac49c22; }
+.concert-art-title { position: absolute; left: 8%; right: 8%; bottom: 25%; display: flex; flex-direction: column; text-align: left; font-family: var(--font-display); font-weight: 750; font-size: clamp(36px, 4.2vw, 56px); line-height: 0.95; letter-spacing: -0.04em; color: var(--color-gold); }
 .concert-art-bottom { position: absolute; inset: auto 8% 7%; display: flex; flex-direction: column; gap: 8px; font-size: 10px; letter-spacing: 0.09em; color: #eee8d9; }
 .concert-art-bottom span:last-child { color: #c2beb0; font-size: 9px; }
 .reveal-heading { align-self: end; }
@@ -323,8 +323,8 @@ main { flex: 1; display: flex; flex-direction: column; justify-content: center; 
   .unlock-content > .primary-button { width: 100%; }
   .reveal-content { grid-template-columns: 1fr; gap: 0; text-align: center; }
   .concert-art { grid-row: auto; width: min(100%, 340px); aspect-ratio: 5 / 4; margin: 0 auto 32px; }
-  .concert-three { font-size: 320px; top: -0.22em; }
-  .concert-art-title { font-size: clamp(42px, 13vw, 58px); bottom: 24%; }
+  .concert-three { font-size: 250px; top: -0.24em; }
+  .concert-art-title { font-size: clamp(32px, 10vw, 42px); bottom: 17%; right: auto; }
   .concert-art-bottom { flex-direction: row; justify-content: space-between; font-size: 8px; letter-spacing: 0.02em; bottom: 8%; }
   .concert-art-bottom span:last-child { font-size: 8px; }
   .reveal-content h1 { font-size: clamp(25px, 7.5vw, 33px); }

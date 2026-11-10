@@ -91,8 +91,8 @@ page = f'''<!doctype html>
           </td>
           <td valign="middle" style="padding:28px 0 0 18px;font-family:{sans};">
             <p style="margin:0;color:{ink};font-size:14px;font-weight:600;">Am Laptop?</p>
-            <p style="margin:6px 0 0;color:{muted};font-size:13px;line-height:1.6;">Scanne den Code mit deinem Handy oder öffne den Link:</p>
-            <p style="margin:8px 0 0;font-size:13px;"><a href="{site}" target="_blank" style="color:{gold};text-decoration:none;">{site.replace('https://', '').replace('.io/', '.io/<wbr>')}</a></p>
+            <p style="margin:6px 0 0;color:{muted};font-size:13px;line-height:1.6;">Scanne den Code mit deinem Handy oder öffne das Portal direkt:</p>
+            <p style="margin:8px 0 0;font-size:13px;font-weight:600;letter-spacing:0.5px;"><a href="{site}" target="_blank" style="color:{gold};text-decoration:none;">PROJECT X Access Portal &nbsp;→</a></p>
           </td>
         </tr></table>
       </td></tr>

@@ -106,7 +106,7 @@ test('complete private journey, retries, recovery, reveal and real PNG download'
   await page.getByRole('button', { name: 'DEINE GESCHENKTICKETS' }).click({ timeout: 8000 })
   await expect(page.getByRole('article')).toHaveCount(2)
   const downloadPromise = page.waitForEvent('download')
-  await page.getByRole('button', { name: 'GESCHENKTICKET SPEICHERN' }).click()
+  await page.getByRole('button', { name: 'TICKET GILLIAN' }).click()
   const download = await downloadPromise
   expect(download.suggestedFilename()).toBe('project-x-gillian-ticket.png')
   const path = await download.path()
@@ -116,7 +116,17 @@ test('complete private journey, retries, recovery, reveal and real PNG download'
   expect(png.readUInt32BE(16)).toBe(1080)
   expect(png.readUInt32BE(20)).toBeGreaterThan(900)
   await download.saveAs(`.impeccable/review/${info.project.name}-ticket-export.png`)
-  await expect(page.getByRole('status')).toContainText('Geschenkticket ist bereit')
+  await expect(page.getByRole('status')).toContainText('Ticket für Gillian gespeichert')
+  // The companion ticket downloads as its own PNG; no exported image is shown on the page.
+  const companionPromise = page.waitForEvent('download')
+  await page.getByRole('button', { name: 'TICKET BEGLEITUNG' }).click()
+  const companion = await companionPromise
+  expect(companion.suggestedFilename()).toBe('project-x-begleitung-ticket.png')
+  const companionPng = await readFile((await companion.path())!)
+  expect(companionPng.readUInt32BE(16)).toBe(1080)
+  await companion.saveAs(`.impeccable/review/${info.project.name}-ticket-export-begleitung.png`)
+  await expect(page.getByRole('status')).toContainText('Begleitung gespeichert')
+  await expect(page.locator('.tickets-screen > img, .export-preview')).toHaveCount(0)
   await page.reload()
   await expect(page.getByRole('article')).toHaveCount(2)
   await expect(page.locator('iframe')).toHaveCount(0)
@@ -195,7 +205,7 @@ test('all phone widths, final-key timing, image fallback and export failure', as
         expect(await page.locator('.ticket-export-surface').evaluate((node) => node.getBoundingClientRect().width)).toBe(540)
         if (width === 320) {
           const ready = page.waitForEvent('download')
-          await page.getByRole('button', { name: 'GESCHENKTICKET SPEICHERN' }).click()
+          await page.getByRole('button', { name: 'TICKET GILLIAN' }).click()
           const download = await ready
           const png = await readFile((await download.path())!)
           expect(png.readUInt32BE(16)).toBe(1080)
@@ -207,9 +217,9 @@ test('all phone widths, final-key timing, image fallback and export failure', as
   await page.setViewportSize({ width: 320, height: 700 })
   // A real failed browser export must give recovery feedback, not a false success.
   await page.evaluate(() => { HTMLCanvasElement.prototype.toBlob = () => { throw new Error('Canvas unavailable') } })
-  await page.getByRole('button', { name: 'GESCHENKTICKET SPEICHERN' }).click()
+  await page.getByRole('button', { name: 'TICKET GILLIAN' }).click()
   await expect(page.getByRole('alert')).toContainText('Bitte versuche es noch einmal')
-  await expect(page.getByRole('button', { name: 'GESCHENKTICKET SPEICHERN' })).toBeEnabled()
+  await expect(page.getByRole('button', { name: 'TICKET GILLIAN' })).toBeEnabled()
   await page.route('**/images/questions/**', (route) => route.abort())
   await page.evaluate(() => sessionStorage.setItem('project-x:progress:v1', JSON.stringify({ screen: 'question', index: 9, selected: null })))
   await page.reload()

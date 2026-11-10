@@ -31,7 +31,6 @@ export const access = { email: 'gillian_jerome93@hotmail.com', password: 'SantPo
 export const gift = {
   recipient: 'Gillian', artists: 'Samra & Capital Bra', show: 'Berlin lebt 3',
   date: '01.04.2027', venue: 'Sporthalle Hamburg',
-  message: 'Alles Gute zum Geburtstag!',
 }
 
 

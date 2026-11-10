@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useRef, useState } from 'react'
-import { ArrowDownToLine, ArrowLeft, ArrowUpRight, Check, RotateCcw } from 'lucide-react'
+import { ArrowDownToLine, ArrowLeft, Check, RotateCcw } from 'lucide-react'
 import { toBlob } from 'html-to-image'
 import { motion, useReducedMotion } from 'motion/react'
 import { AnimatedButton, ScreenTransition } from '../../components/ui'
@@ -8,7 +8,11 @@ import { EkgDivider } from './berlinUi'
 import { useTilt } from './berlin'
 import { finaleMedia } from './finaleMedia'
 
-const filename = 'project-x-gillian-ticket.png'
+type TicketKind = 'gillian' | 'companion'
+const exports: Record<TicketKind, { filename: string; label: string; saved: string }> = {
+  gillian: { filename: 'project-x-gillian-ticket.png', label: `TICKET ${gift.recipient.toUpperCase()}`, saved: `Ticket für ${gift.recipient} gespeichert.` },
+  companion: { filename: 'project-x-begleitung-ticket.png', label: 'TICKET BEGLEITUNG', saved: 'Ticket für deine Begleitung gespeichert.' },
+}
 
 /** Front of a symbolic gift ticket in Berlin lebt 3 branding. No barcode, seat or ticket number. */
 const TicketFront = forwardRef<HTMLElement, { companion?: boolean }>(function TicketFront({ companion = false }, ref) {
@@ -60,38 +64,43 @@ function TicketCard({ companion = false, index }: { companion?: boolean; index: 
 }
 
 export function TicketScreen({ onBack }: { onBack: () => void }) {
-  const ticketRef = useRef<HTMLElement>(null)
+  const gillianRef = useRef<HTMLElement>(null)
+  const companionRef = useRef<HTMLElement>(null)
   const exporting = useRef(false)
   const posterReady = useRef<Promise<void>>(Promise.resolve())
-  const [busy, setBusy] = useState(false)
-  const [preview, setPreview] = useState<string | null>(null)
+  const surfaceRef = useRef<HTMLDivElement>(null)
+  const [busy, setBusy] = useState<TicketKind | null>(null)
+  const [saved, setSaved] = useState<TicketKind | null>(null)
   const [error, setError] = useState('')
-  useEffect(() => () => { if (preview) URL.revokeObjectURL(preview) }, [preview])
   useEffect(() => {
-    const image = ticketRef.current?.querySelector('img')
-    if (image) posterReady.current = image.decode().catch(() => undefined)
+    const images = [...(surfaceRef.current?.querySelectorAll('img') ?? [])]
+    posterReady.current = Promise.all(images.map((image) => image.decode().catch(() => undefined))).then(() => undefined)
   }, [])
 
-  async function saveTicket() {
-    if (!ticketRef.current || exporting.current) return
+  async function saveTicket(kind: TicketKind) {
+    const node = (kind === 'gillian' ? gillianRef : companionRef).current
+    if (!node || exporting.current) return
     exporting.current = true
-    setBusy(true)
+    setBusy(kind)
+    setSaved(null)
     setError('')
     try {
       await Promise.all([document.fonts.ready, posterReady.current])
-      const blob = await toBlob(ticketRef.current, { pixelRatio: 2, backgroundColor: '#070707', cacheBust: false, preferredFontFormat: 'woff2' })
+      const blob = await toBlob(node, { pixelRatio: 2, backgroundColor: '#070707', cacheBust: false, preferredFontFormat: 'woff2' })
       if (!blob) throw new Error('Empty export')
       const url = URL.createObjectURL(blob)
-      setPreview(url)
       const link = document.createElement('a')
       link.href = url
-      link.download = filename
+      link.download = exports[kind].filename
       document.body.append(link)
       link.click()
       link.remove()
+      // Give the browser time to start the download before the blob is released.
+      window.setTimeout(() => URL.revokeObjectURL(url), 60_000)
+      setSaved(kind)
     } catch {
       setError('Das Bild konnte nicht erstellt werden. Bitte versuche es noch einmal.')
-    } finally { exporting.current = false; setBusy(false) }
+    } finally { exporting.current = false; setBusy(null) }
   }
 
   return <ScreenTransition className="tickets-screen">
@@ -100,9 +109,14 @@ export function TicketScreen({ onBack }: { onBack: () => void }) {
     <p className="story-copy">Hamburg. Laut mitsingen. Erinnerungen mitnehmen.</p>
     <div className="ticket-grid"><TicketCard index={0} /><TicketCard companion index={1} /></div>
     <p className="ticket-hint">Wisch über ein Ticket oder dreh es um.</p>
-    <div className="ticket-export-surface" aria-hidden="true" inert><TicketFront ref={ticketRef} /></div>
-    <div className="ticket-actions" aria-busy={busy}><AnimatedButton onClick={saveTicket} disabled={busy}><ArrowDownToLine size={18} />{busy ? 'BILD WIRD ERSTELLT …' : 'GESCHENKTICKET SPEICHERN'}</AnimatedButton><p>Für Gillian · dein Geschenkticket als Bild</p></div>
+    <div className="ticket-export-surface" ref={surfaceRef} aria-hidden="true" inert><TicketFront ref={gillianRef} /><TicketFront ref={companionRef} companion /></div>
+    <div className="ticket-actions" aria-busy={busy !== null}>
+      <p className="ticket-actions-title">Geschenktickets als Bild speichern</p>
+      <div className="ticket-buttons">
+        {(['gillian', 'companion'] as const).map((kind) => <AnimatedButton key={kind} onClick={() => saveTicket(kind)} disabled={busy !== null}><ArrowDownToLine size={18} />{busy === kind ? 'BILD WIRD ERSTELLT …' : exports[kind].label}</AnimatedButton>)}
+      </div>
+      <p role="status" className="ticket-saved">{saved && <><Check size={15} />{exports[saved].saved}</>}</p>
+    </div>
     {error && <p className="form-error" role="alert">{error}</p>}
-    {preview && <div className="export-preview"><p role="status"><Check size={16} />Dein Geschenkticket ist bereit.</p><p>Falls der Download auf deinem Handy nicht startet: Öffne das Bild und halte es zum Speichern gedrückt.</p><a className="text-button" href={preview} target="_blank" rel="noreferrer">TICKETBILD ÖFFNEN <ArrowUpRight size={16} /></a><img src={preview} alt="Exportiertes Geschenkticket für Gillian" /></div>}
   </ScreenTransition>
 }

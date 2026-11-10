@@ -58,9 +58,9 @@ Trailer neu kürzen: `media-src/video/video.mov` mit einem Encoder auf H.264/AAC
 
 ### Nachricht und Tickets
 
-Die provisorische Anmerkung „Text noch ändern?“ wurde durch einen fertigen Geburtstagsgruß ersetzt. Dieser steht in `gift.message` und kann persönlich angepasst werden. Die beiden übrigen Botschaften stehen in `ResultScreen.tsx`.
+Die persönliche Nachricht auf der Gewinnseite („Überraschung, mein Schatz! …“) steht direkt in `ResultScreen.tsx` (Block `personal-message`).
 
-Beide Karten sind als symbolische Geschenktickets gekennzeichnet und keine Eintrittskarten. „GESCHENKTICKET SPEICHERN“ exportiert das Gillian-Ticket lokal mit `html-to-image` als `project-x-gillian-ticket.png` aus einer festen 540-Pixel-Vorlage in doppelter Auflösung (1080 Pixel breit), unabhängig von der Bildschirmgröße. Die Exportvorlage enthält keine Bedienelemente und ist von Tastatur und Assistenztechnik ausgeschlossen. Falls das Handy den Download nicht anbietet, lässt sich das erzeugte Bild separat öffnen und per langem Druck speichern. Die Bildvorschau bleibt bis zum Verlassen des Screens verfügbar. Kein Upload und kein externer Exportdienst.
+Beide Karten sind als symbolische Geschenktickets gekennzeichnet und keine Eintrittskarten. Die Buttons „TICKET GILLIAN“ und „TICKET BEGLEITUNG“ exportieren jeweils ein Ticket lokal mit `html-to-image` als `project-x-gillian-ticket.png` bzw. `project-x-begleitung-ticket.png` aus einer festen 540-Pixel-Vorlage in doppelter Auflösung (1080 Pixel breit), unabhängig von der Bildschirmgröße. Die Exportvorlage enthält keine Bedienelemente und ist von Tastatur und Assistenztechnik ausgeschlossen. Nach dem Speichern erscheint nur eine kurze Bestätigung, keine Bildvorschau. Kein Upload und kein externer Exportdienst.
 
 ## Dateien und Verantwortlichkeiten
 

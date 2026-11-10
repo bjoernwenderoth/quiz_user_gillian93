@@ -385,6 +385,8 @@ main { flex: 1; display: flex; flex-direction: column; justify-content: center; 
 .personal-message { max-width: 520px; margin: 48px auto 0; padding-top: 30px; border-top: 1px solid var(--color-line); font-size: 15px; line-height: 1.8; color: var(--color-muted); }
 .personal-message p + p { margin-top: 12px; }
 .personal-message strong { color: var(--color-ink); font-weight: 600; }
+.personal-message .message-lead { color: var(--color-ink); font-size: 19px; font-weight: 600; line-height: 1.5; }
+.personal-message .message-sign { margin-top: 22px; color: var(--color-ink); font-size: 17px; font-weight: 600; }
 .reveal-action { margin-top: 34px; }
 
 /* ───────────── Tickets ───────────── */
@@ -415,7 +417,10 @@ main { flex: 1; display: flex; flex-direction: column; justify-content: center; 
 @media (hover: hover) { .ticket-flip-button:hover { color: var(--color-ink); border-color: #ffffff40; } }
 .ticket-hint { margin-top: 14px; font-size: 12px; color: var(--color-muted); }
 .ticket-actions { margin-top: 30px; }
-.ticket-actions > p { margin-top: 13px; font-size: 12px; line-height: 1.7; color: var(--color-muted); }
+.ticket-actions-title { margin-bottom: 14px; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-muted); }
+.ticket-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+.ticket-buttons .primary-button { min-width: 240px; }
+.ticket-saved { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 22px; margin-top: 14px; font-size: 12px; color: var(--color-positive); }
 
 .bl-ticket { position: relative; overflow: hidden; text-align: left; border-radius: 18px; border: 1px solid #ff2a3538; background: #0b0909; color: #f6f2f0; font-family: 'DM Sans Variable', sans-serif; box-shadow: 0 34px 80px -34px #e3141f90; }
 .bl-ticket-hero { position: relative; aspect-ratio: 16 / 9; overflow: hidden; }
@@ -459,10 +464,6 @@ main { flex: 1; display: flex; flex-direction: column; justify-content: center; 
 .ticket-export-surface .bl-ticket-stub strong { font-size: 32px; }
 .ticket-export-surface .bl-ticket-mark { font-size: 54px; }
 .ticket-export-surface .bl-ticket-disclaimer { padding: 14px 32px; font-size: 12px; }
-.export-preview { max-width: 390px; margin: 28px auto 0; text-align: center; }
-.export-preview p { font-size: 12px; line-height: 1.7; color: var(--color-muted); }
-.export-preview p:first-child { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; color: var(--color-positive); }
-.export-preview img { display: block; width: 100%; height: auto; margin-top: 15px; border-radius: 18px; }
 
 @media (max-width: 640px) {
   .poster-scene { margin-bottom: 36px; }
@@ -471,6 +472,7 @@ main { flex: 1; display: flex; flex-direction: column; justify-content: center; 
   .reveal-details { flex-direction: column; align-items: center; }
   .personal-message { margin-top: 38px; }
   .reveal-action, .reveal-action .primary-button, .ticket-actions .primary-button { width: 100%; }
+  .ticket-buttons { flex-direction: column; }
   .ticket-grid { grid-template-columns: 1fr; gap: 30px; margin-top: 34px; }
   .bl-ticket-body, .bl-ticket-stub { padding-inline: 20px; }
   .bl-ticket-details { gap: 22px; }

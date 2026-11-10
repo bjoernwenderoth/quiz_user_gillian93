@@ -42,9 +42,10 @@ export function ResultScreen({ onTickets }: { onTickets: () => void }) {
         <div className="reveal-details"><p><CalendarDays size={17} /><span>{gift.date}</span></p><p><MapPin size={17} /><span>{gift.venue.toUpperCase()}</span></p></div>
       </motion.div>
       <motion.div variants={slam} className="personal-message">
-        <p>Die echten Tickets sind leider noch nicht rechtzeitig gelandet – typisch VIP-Status mit etwas Verspätung. 😄</p>
-        <p><strong>Aber eins ist sicher: Du bist dabei!</strong></p>
-        <p>{gift.message}</p>
+        <p className="message-lead">Überraschung, mein Schatz! ❤️</p>
+        <p>Du dachtest, du machst hier einfach nur irgendein Quiz? Tja, falsch gedacht! 😂 Dieses Jahr schenke ich dir keine Sache, sondern einen Abend, den du hoffentlich so schnell nicht vergisst!</p>
+        <p>Und das Beste? <strong>Du bekommst gleich zwei Tickets</strong> und darfst selbst entscheiden, wer dich begleitet 😏 Die echten Tickets sind leider noch auf dem Postweg, aber die Vorfreude kann ja schon mal anfangen!</p>
+        <p className="message-sign">Happy Birthday! Wir lieben dich ❤️</p>
       </motion.div>
       <motion.div variants={slam} className="reveal-action"><AnimatedButton disabled={!ready} onClick={onTickets}>DEINE GESCHENKTICKETS <ArrowRight size={17} /></AnimatedButton></motion.div>
     </motion.div>

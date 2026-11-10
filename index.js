@@ -1,0 +1,1 @@
+console.log("Quiz für Gilli läuft!");

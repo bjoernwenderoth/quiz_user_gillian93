@@ -1,0 +1,109 @@
+# PROJECT X · Private Access
+
+Eine statische, deutschsprachige Challenge für Gillian. Der Geburtstag und das Konzertgeschenk werden erst im Finale sichtbar. Das bestehende React-Projekt wurde gezielt weiterentwickelt; Vite, TypeScript, Tailwind v4, Motion, lokale Schriften und GitHub-Pages-Konfiguration bleiben erhalten.
+
+## Lokal starten
+
+Node.js 24 und npm:
+
+```sh
+npm ci
+npm run dev
+```
+
+Die lokale Adresse enthält den Projektpfad `/quiz_user_gillian93/`. Für die Produktionsvorschau `npm run build` und `npm run preview` ausführen.
+
+## Ablauf
+
+Login → Identity Check → Mission Briefing → Fragen 1–5 → Halbzeit → Fragen 6–10 → Abschluss → Klick auf „GEWINN FREISCHALTEN“ → Entschlüsselung → Konzert-Reveal → zwei Geschenktickets.
+
+Der Login ist Teil der Inszenierung: Eine beliebige syntaktisch gültige E-Mail-Adresse und ein beliebiges nicht leeres Passwort funktionieren. Ein erfundenes Passwort verwenden. Die Felder werden weder gespeichert noch versendet. Es gibt keinen Server und keine echte Zugangskontrolle; die Fragen und Geschenkdetails sind im Frontend enthalten.
+
+Falsche Antworten können erneut versucht werden und verraten die richtige Antwort nicht. Richtige Antworten erhöhen den Fortschritt und schalten die Aktion zur nächsten Frage frei. Der Ablauf hat kein Zeitlimit. Nach Frage 5 erscheint die Halbzeit. Nach der richtigen Antwort auf Frage 10 verblassen die übrigen Karten. Nach einem kurzen Erfolgsfeedback folgt automatisch „BERLIN LEBT“, dann die Bestätigung des letzten Schlüssels und erst danach die Freischaltaktion. Das Geschenk bleibt bis zum bewussten Freischalten verborgen.
+
+Der Fortschritt liegt ausschließlich in `sessionStorage` unter `project-x:progress:v1`. Neuladen setzt am aktuellen Screen fort. Bei unterbrochener Entschlüsselung erscheint wieder der Freischalt-Button. Ohne verfügbaren Browserspeicher funktioniert der Ablauf weiterhin, allerdings ohne Wiederherstellung nach Neuladen. Am Ticket-Screen setzt „Neu beginnen“ die Runde zurück.
+
+## Inhalte bearbeiten
+
+`src/features/quiz/content.ts` enthält den exakten Fragenkatalog, Bilddateien und Alternativtexte, `gift` mit Konzertdaten und persönlicher Nachricht sowie die Musik-Konfiguration.
+
+Die vorgegebenen Geschenkdetails sind übernommen: **2 Tickets für Samra & Capital Bra, Berlin lebt 3, 01.04.2027, Sporthalle Hamburg**. Sie wurden nicht gegen einen Veranstalterkalender geprüft.
+
+### Bilder
+
+Die zehn Bilder liegen lokal unter `public/images/questions/`. Es sind austauschbare atmosphärische Stockmotive; keine offiziellen Künstlerfotos oder WoW-Screenshots. Das Pasta-Bild zeigt ein allgemeines Pasta-Motiv, keine Carbonara. Herkunftslinks stehen in `public/images/questions/SOURCES.md` und in den Bildmetadaten.
+
+Eine Datei mit gleichem Namen ersetzen oder `image` und `imageAlt` im Fragenkatalog anpassen. Empfehlenswert sind JPEG/WebP, mindestens 1000 px Breite und ein mittig platziertes Motiv. Die Ansicht vereinheitlicht die Motive über Ausschnitt, reduzierte Sättigung und ein dunkles Overlay. Sämtliche URLs nutzen Vites `BASE_URL` und funktionieren im GitHub-Pages-Unterverzeichnis. Ein nicht ladendes Bild lässt eine ruhige, weiterhin bedienbare Motivfläche stehen.
+
+### Musik
+
+Noch keine endgültige Quelle hinterlegt. In `content.ts` die **11-stellige YouTube-Video-ID eines offiziellen, einbettbaren Trailers** setzen:
+
+```ts
+export const music: { youtubeVideoId: string | null } = {
+  youtubeVideoId: null, // Hier die offizielle Video-ID als Zeichenfolge eintragen.
+}
+```
+
+Erst der Klick auf „GEWINN FREISCHALTEN“ aktiviert den YouTube-No-Cookie-Player mit Autoplay-Anfrage. Zuvor gibt es keine Verbindung zu YouTube. Nach einem Reload startet Musik nie selbst; „MUSIK STARTEN“ aktiviert den Player erneut. Browser können Autoplay trotzdem blockieren; sichtbare Player-Steuerung erlaubt dann den manuellen Start. Der Player kann geschlossen und wieder gestartet werden. Ohne gültige ID erscheint nach dem Freischalten ein klarer Soundtrack-Platzhalter. Keine lokale Originalmusik wird mitgeliefert.
+
+### Nachricht und Tickets
+
+Die provisorische Anmerkung „Text noch ändern?“ wurde durch einen fertigen Geburtstagsgruß ersetzt. Dieser steht in `gift.message` und kann persönlich angepasst werden. Die beiden übrigen Botschaften stehen in `ResultScreen.tsx`.
+
+Beide Karten sind als symbolische Geschenktickets gekennzeichnet und keine Eintrittskarten. „GESCHENKTICKET SPEICHERN“ exportiert das Gillian-Ticket lokal mit `html-to-image` als `project-x-gillian-ticket.png` aus einer festen 540-Pixel-Vorlage in doppelter Auflösung (1080 Pixel breit), unabhängig von der Bildschirmgröße. Die Exportvorlage enthält keine Bedienelemente und ist von Tastatur und Assistenztechnik ausgeschlossen. Falls das Handy den Download nicht anbietet, lässt sich das erzeugte Bild separat öffnen und per langem Druck speichern. Die Bildvorschau bleibt bis zum Verlassen des Screens verfügbar. Kein Upload und kein externer Exportdienst.
+
+## Dateien und Verantwortlichkeiten
+
+| Datei | Aufgabe |
+| --- | --- |
+| `src/App.tsx` | Screen-Auswahl, Shell, Freischaltaktion und Musik-Aktivierung |
+| `src/components/ui.tsx` | Wiederverwendbare Buttons, Screen-Übergänge, Fokus und Fortschritt |
+| `src/features/quiz/content.ts` | Fragen, Bildzuordnung, Geschenk, persönliche Nachricht und Musik-ID |
+| `src/features/quiz/state.ts` | Zulässige Übergänge, Wiederholungsversuche und validierte Wiederherstellung |
+| `src/features/quiz/useQuiz.ts` | Reducer und Sitzungsspeicherung |
+| `src/features/quiz/LoginScreen.tsx` | Simulierter Login mit Formularvalidierung |
+| `src/features/quiz/IntroScreen.tsx` | Mission Briefing |
+| `src/features/quiz/QuestionScreen.tsx` | Bildfragen und Antwortfeedback |
+| `src/features/quiz/StoryScreens.tsx` | Verifikation, Halbzeit, Abschluss und Entschlüsselung |
+| `src/features/quiz/ResultScreen.tsx` | Gestaffelte Konzert-Enthüllung und persönliche Botschaft |
+| `src/features/quiz/TicketScreen.tsx` | Beide Geschenktickets, PNG-Export und mobile Speicherhilfe |
+| `src/features/quiz/MusicPlayer.tsx` | Optionales offizielles Embed und Platzhalter |
+| `src/styles.css`, `src/design/motion.ts` | Responsive Darstellung, bestehende Farbwelt und Animationen |
+| `index.html`, `public/favicon.svg` | Geheimniswahrende Metadaten und PROJECT-X-Signet |
+| `public/images/questions/` | Zehn lokale, austauschbare Motivbilder und Herkunftsnachweise |
+| `src/features/quiz/state.test.ts`, `tests/quiz.spec.ts` | Logiktests und Desktop-/Mobil-Browsertests |
+
+`html-to-image` war bereits vorhanden. Für diesen Premium-Polish wurden keine Bibliotheken installiert und keine Paketdateien geändert.
+
+## Qualität und Zugänglichkeit
+
+```sh
+npm run lint
+npm run typecheck
+npm test
+npm run build
+npm run test:e2e
+```
+
+Beim ersten Playwright-Einsatz gegebenenfalls `npx playwright install chromium` ausführen. Die Tests verwenden den Produktionsbuild auf Port 4173. Abgedeckt sind der vollständige Ablauf, falsche und richtige Antworten, Halbzeit, Session-Wiederherstellung, blockierter Speicher, beschädigte Daten, bewusste Freischaltung, Tastaturbedienung, reduzierte Bewegung, schmale Ansichten sowie der Download einer echten PNG-Datei. Mobiltests verwenden Chromium mit iPhone-Viewport; eine Prüfung auf einem echten iPhone/Safari ergänzt diese Simulation sinnvoll.
+
+Semantische Formulare, beschriftete Eingaben, sichtbare Fokuszustände, Fokus auf neuen Überschriften und Live-Feedback sind vorhanden. Systemseitig reduzierte Bewegung wird respektiert. Lokale Bilder und Schriften vermeiden externe Requests während der Challenge.
+
+## GitHub Pages
+
+`vite.config.ts` verwendet weiterhin `base: '/quiz_user_gillian93/'`. Der vorhandene manuell gestartete Workflow `.github/workflows/pages.yml` baut und veröffentlicht `dist/`. Vor der ersten Veröffentlichung im Repository **Settings → Pages → Source: GitHub Actions** wählen und den Deploy-Workflow manuell starten. Bei Umbenennung des Repositorys auch `base` und die Test-URLs in `playwright.config.ts` anpassen.
+
+Es wurde nichts gepusht oder veröffentlicht. `DESIGN.md` dokumentiert das aktuelle Designsystem. Die Bestandsaufnahme, Änderungen und tatsächlich ausgeführten Prüfungen stehen in `PROJECT-X.md`.
+
+## Noch zu befüllen
+
+- Offizielle Trailer-Video-ID, falls Musik gewünscht ist.
+- Optional eine persönlichere Geburtstagsnachricht.
+- Optional eigene Bilder statt der bereits eingebundenen Stockmotive.
+
+Für die Funktion des Quiz und des Ticketdownloads sind keine weiteren Inhalte erforderlich.
+
+## Premium-Polish
+
+Das Finale nutzt ein eigenes typografisches Tourmotiv über dem vorhandenen lokalen Stadtfoto, kein offizielles Albumcover. Die Enthüllung zeigt Motiv, Widmung, Konzertdaten und persönliche Nachricht zeitlich gestaffelt; die Ticketaktion wird erst am Ende freigegeben. `src/design/motion.ts` bündelt die relevanten Zeitpunkte. Fragen und richtige Antworten wurden nicht verändert.

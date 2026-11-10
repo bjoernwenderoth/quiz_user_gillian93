@@ -1,0 +1,480 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-10T01:18:06.068116+00:00",
+  "title": "Design System: Quiz für Gilli",
+  "extensions": {
+    "colorMeta": {
+      "ground": {
+        "role": "neutral",
+        "displayName": "Ground",
+        "tonalRamp": [
+          "oklch(15.0% 0.0023 134.98)",
+          "oklch(26.0% 0.0043 134.98)",
+          "oklch(38.0% 0.0056 134.98)",
+          "oklch(50.0% 0.0066 134.98)",
+          "oklch(62.0% 0.0066 134.98)",
+          "oklch(74.0% 0.0056 134.98)",
+          "oklch(86.0% 0.0036 134.98)",
+          "oklch(95.0% 0.0013 134.98)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "tonalRamp": [
+          "oklch(15.0% 0.0030 137.82)",
+          "oklch(26.0% 0.0056 137.82)",
+          "oklch(38.0% 0.0073 137.82)",
+          "oklch(50.0% 0.0086 137.82)",
+          "oklch(62.0% 0.0086 137.82)",
+          "oklch(74.0% 0.0073 137.82)",
+          "oklch(86.0% 0.0047 137.82)",
+          "oklch(95.0% 0.0017 137.82)"
+        ]
+      },
+      "surface-hover": {
+        "role": "neutral",
+        "displayName": "Surface Hover",
+        "tonalRamp": [
+          "oklch(15.0% 0.0042 135.04)",
+          "oklch(26.0% 0.0079 135.04)",
+          "oklch(38.0% 0.0103 135.04)",
+          "oklch(50.0% 0.0121 135.04)",
+          "oklch(62.0% 0.0121 135.04)",
+          "oklch(74.0% 0.0103 135.04)",
+          "oklch(86.0% 0.0066 135.04)",
+          "oklch(95.0% 0.0024 135.04)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15.0% 0.0039 89.72)",
+          "oklch(26.0% 0.0072 89.72)",
+          "oklch(38.0% 0.0094 89.72)",
+          "oklch(50.0% 0.0111 89.72)",
+          "oklch(62.0% 0.0111 89.72)",
+          "oklch(74.0% 0.0094 89.72)",
+          "oklch(86.0% 0.0061 89.72)",
+          "oklch(95.0% 0.0022 89.72)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "oklch(15.0% 0.0052 124.63)",
+          "oklch(26.0% 0.0096 124.63)",
+          "oklch(38.0% 0.0126 124.63)",
+          "oklch(50.0% 0.0148 124.63)",
+          "oklch(62.0% 0.0148 124.63)",
+          "oklch(74.0% 0.0126 124.63)",
+          "oklch(86.0% 0.0081 124.63)",
+          "oklch(95.0% 0.0030 124.63)"
+        ]
+      },
+      "gold": {
+        "role": "primary",
+        "displayName": "Gold",
+        "tonalRamp": [
+          "oklch(15.0% 0.0206 82.39)",
+          "oklch(26.0% 0.0382 82.39)",
+          "oklch(38.0% 0.0499 82.39)",
+          "oklch(50.0% 0.0587 82.39)",
+          "oklch(62.0% 0.0587 82.39)",
+          "oklch(74.0% 0.0499 82.39)",
+          "oklch(86.0% 0.0323 82.39)",
+          "oklch(95.0% 0.0117 82.39)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Line",
+        "tonalRamp": [
+          "oklch(15.0% 0.0051 128.95)",
+          "oklch(26.0% 0.0095 128.95)",
+          "oklch(38.0% 0.0125 128.95)",
+          "oklch(50.0% 0.0147 128.95)",
+          "oklch(62.0% 0.0147 128.95)",
+          "oklch(74.0% 0.0125 128.95)",
+          "oklch(86.0% 0.0081 128.95)",
+          "oklch(95.0% 0.0029 128.95)"
+        ]
+      },
+      "positive": {
+        "role": "secondary",
+        "displayName": "Positive",
+        "tonalRamp": [
+          "oklch(15.0% 0.0205 148.10)",
+          "oklch(26.0% 0.0380 148.10)",
+          "oklch(38.0% 0.0497 148.10)",
+          "oklch(50.0% 0.0584 148.10)",
+          "oklch(62.0% 0.0584 148.10)",
+          "oklch(74.0% 0.0497 148.10)",
+          "oklch(86.0% 0.0321 148.10)",
+          "oklch(95.0% 0.0117 148.10)"
+        ]
+      },
+      "negative": {
+        "role": "secondary",
+        "displayName": "Negative",
+        "tonalRamp": [
+          "oklch(15.0% 0.0235 40.62)",
+          "oklch(26.0% 0.0437 40.62)",
+          "oklch(38.0% 0.0571 40.62)",
+          "oklch(50.0% 0.0672 40.62)",
+          "oklch(62.0% 0.0672 40.62)",
+          "oklch(74.0% 0.0571 40.62)",
+          "oklch(86.0% 0.0370 40.62)",
+          "oklch(95.0% 0.0134 40.62)"
+        ]
+      },
+      "button-ink": {
+        "role": "primary",
+        "displayName": "Button Ink",
+        "tonalRamp": [
+          "oklch(15.0% 0.0053 124.15)",
+          "oklch(26.0% 0.0098 124.15)",
+          "oklch(38.0% 0.0128 124.15)",
+          "oklch(50.0% 0.0151 124.15)",
+          "oklch(62.0% 0.0151 124.15)",
+          "oklch(74.0% 0.0128 124.15)",
+          "oklch(86.0% 0.0083 124.15)",
+          "oklch(95.0% 0.0030 124.15)"
+        ]
+      },
+      "gold-hover": {
+        "role": "primary",
+        "displayName": "Gold Hover",
+        "tonalRamp": [
+          "oklch(15.0% 0.0170 81.47)",
+          "oklch(26.0% 0.0316 81.47)",
+          "oklch(38.0% 0.0413 81.47)",
+          "oklch(50.0% 0.0486 81.47)",
+          "oklch(62.0% 0.0486 81.47)",
+          "oklch(74.0% 0.0413 81.47)",
+          "oklch(86.0% 0.0267 81.47)",
+          "oklch(95.0% 0.0097 81.47)"
+        ]
+      },
+      "field": {
+        "role": "neutral",
+        "displayName": "Field",
+        "tonalRamp": [
+          "oklch(15.0% 0.0036 132.69)",
+          "oklch(26.0% 0.0067 132.69)",
+          "oklch(38.0% 0.0088 132.69)",
+          "oklch(50.0% 0.0104 132.69)",
+          "oklch(62.0% 0.0104 132.69)",
+          "oklch(74.0% 0.0088 132.69)",
+          "oklch(86.0% 0.0057 132.69)",
+          "oklch(95.0% 0.0021 132.69)"
+        ]
+      },
+      "field-border": {
+        "role": "neutral",
+        "displayName": "Field Border",
+        "tonalRamp": [
+          "oklch(15.0% 0.0066 123.56)",
+          "oklch(26.0% 0.0123 123.56)",
+          "oklch(38.0% 0.0160 123.56)",
+          "oklch(50.0% 0.0189 123.56)",
+          "oklch(62.0% 0.0189 123.56)",
+          "oklch(74.0% 0.0160 123.56)",
+          "oklch(86.0% 0.0104 123.56)",
+          "oklch(95.0% 0.0038 123.56)"
+        ]
+      },
+      "answer-border": {
+        "role": "neutral",
+        "displayName": "Answer Border",
+        "tonalRamp": [
+          "oklch(15.0% 0.0068 127.31)",
+          "oklch(26.0% 0.0127 127.31)",
+          "oklch(38.0% 0.0166 127.31)",
+          "oklch(50.0% 0.0196 127.31)",
+          "oklch(62.0% 0.0196 127.31)",
+          "oklch(74.0% 0.0166 127.31)",
+          "oklch(86.0% 0.0108 127.31)",
+          "oklch(95.0% 0.0039 127.31)"
+        ]
+      },
+      "correct-surface": {
+        "role": "secondary",
+        "displayName": "Correct Surface",
+        "tonalRamp": [
+          "oklch(15.0% 0.0113 148.13)",
+          "oklch(26.0% 0.0210 148.13)",
+          "oklch(38.0% 0.0274 148.13)",
+          "oklch(50.0% 0.0323 148.13)",
+          "oklch(62.0% 0.0323 148.13)",
+          "oklch(74.0% 0.0274 148.13)",
+          "oklch(86.0% 0.0178 148.13)",
+          "oklch(95.0% 0.0065 148.13)"
+        ]
+      },
+      "correct-border": {
+        "role": "secondary",
+        "displayName": "Correct Border",
+        "tonalRamp": [
+          "oklch(15.0% 0.0233 143.41)",
+          "oklch(26.0% 0.0433 143.41)",
+          "oklch(38.0% 0.0566 143.41)",
+          "oklch(50.0% 0.0666 143.41)",
+          "oklch(62.0% 0.0666 143.41)",
+          "oklch(74.0% 0.0566 143.41)",
+          "oklch(86.0% 0.0366 143.41)",
+          "oklch(95.0% 0.0133 143.41)"
+        ]
+      },
+      "correct-ink": {
+        "role": "secondary",
+        "displayName": "Correct Ink",
+        "tonalRamp": [
+          "oklch(15.0% 0.0149 141.99)",
+          "oklch(26.0% 0.0277 141.99)",
+          "oklch(38.0% 0.0362 141.99)",
+          "oklch(50.0% 0.0426 141.99)",
+          "oklch(62.0% 0.0426 141.99)",
+          "oklch(74.0% 0.0362 141.99)",
+          "oklch(86.0% 0.0234 141.99)",
+          "oklch(95.0% 0.0085 141.99)"
+        ]
+      },
+      "wrong-surface": {
+        "role": "secondary",
+        "displayName": "Wrong Surface",
+        "tonalRamp": [
+          "oklch(15.0% 0.0079 55.41)",
+          "oklch(26.0% 0.0146 55.41)",
+          "oklch(38.0% 0.0191 55.41)",
+          "oklch(50.0% 0.0225 55.41)",
+          "oklch(62.0% 0.0225 55.41)",
+          "oklch(74.0% 0.0191 55.41)",
+          "oklch(86.0% 0.0124 55.41)",
+          "oklch(95.0% 0.0045 55.41)"
+        ]
+      },
+      "wrong-border": {
+        "role": "secondary",
+        "displayName": "Wrong Border",
+        "tonalRamp": [
+          "oklch(15.0% 0.0233 54.26)",
+          "oklch(26.0% 0.0433 54.26)",
+          "oklch(38.0% 0.0566 54.26)",
+          "oklch(50.0% 0.0666 54.26)",
+          "oklch(62.0% 0.0666 54.26)",
+          "oklch(74.0% 0.0566 54.26)",
+          "oklch(86.0% 0.0366 54.26)",
+          "oklch(95.0% 0.0133 54.26)"
+        ]
+      },
+      "wrong-ink": {
+        "role": "secondary",
+        "displayName": "Wrong Ink",
+        "tonalRamp": [
+          "oklch(15.0% 0.0187 46.26)",
+          "oklch(26.0% 0.0348 46.26)",
+          "oklch(38.0% 0.0455 46.26)",
+          "oklch(50.0% 0.0536 46.26)",
+          "oklch(62.0% 0.0536 46.26)",
+          "oklch(74.0% 0.0455 46.26)",
+          "oklch(86.0% 0.0295 46.26)",
+          "oklch(95.0% 0.0107 46.26)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Large introductory greeting."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Question prompts."
+      },
+      "editorial": {
+        "displayName": "Editorial",
+        "purpose": "Personal emphasis and seal initial."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Dedication and reading copy."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Utility labels."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Primary action text."
+      }
+    },
+    "shadows": [
+      {
+        "name": "action",
+        "value": "0 4px 10px #00000018",
+        "purpose": "Primary action at rest."
+      },
+      {
+        "name": "action-hover",
+        "value": "0 5px 16px #00000024",
+        "purpose": "Primary action on hover."
+      },
+      {
+        "name": "help",
+        "value": "0 12px 35px #0005",
+        "purpose": "Help popover."
+      },
+      {
+        "name": "seal",
+        "value": "0 22px 50px -25px #00000085, inset 0 1px 1px #d8c09b21",
+        "purpose": "Keepsake material."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Shared eased motion."
+      },
+      {
+        "name": "spring",
+        "value": "spring(duration: 0.45s, bounce: 0)",
+        "purpose": "Default MotionConfig transition."
+      },
+      {
+        "name": "entrance",
+        "value": "opacity 0 → 1, y 14px → 0; 0.65s",
+        "purpose": "Greeting content entrance; reduced motion uses y 0, a 0.1s opacity-only transition and no child staggering."
+      },
+      {
+        "name": "screen",
+        "value": "opacity 0 → 1, y 12px → 0; exit y -6px; 0.28s",
+        "purpose": "Screen change; reduced motion uses no y movement and 0.1s."
+      },
+      {
+        "name": "press",
+        "value": "scale(0.96)",
+        "purpose": "Button press; omitted for reduced motion."
+      },
+      {
+        "name": "state",
+        "value": "150ms",
+        "purpose": "Color, border and shadow transitions."
+      },
+      {
+        "name": "progress",
+        "value": "0.5s",
+        "purpose": "Progress fill; zero for reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-phone",
+        "value": "380px"
+      },
+      {
+        "name": "phone",
+        "value": "640px"
+      },
+      {
+        "name": "tablet",
+        "value": "900px"
+      },
+      {
+        "name": "wide",
+        "value": "1500px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Champagne action with a clear directional cue.",
+      "html": "<button class=\"ds-primary\">Los geht’s <svg width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></button>",
+      "css": ".ds-primary{font-family:var(--font-sans);border:0;background:var(--color-gold);color:#24271f;border-radius:var(--radius-control);display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:54px;padding:14px 25px;font-size:14px;font-weight:650;box-shadow:0 4px 10px #00000018;transition:background-color 150ms,box-shadow 150ms;cursor:pointer}.ds-primary:hover{background:#e8d5b4;box-shadow:0 5px 16px #00000024}.ds-primary:focus-visible{outline:2px solid var(--color-gold);outline-offset:5px;}.ds-primary:active{transform:scale(.96)}.ds-primary:disabled{opacity:.5;cursor:default}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}.ds-primary:active{transform:none}}"
+    },
+    {
+      "name": "Text Button",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "Quiet return action.",
+      "html": "<button class=\"ds-text\">Zur Startseite</button>",
+      "css": ".ds-text{font-family:var(--font-sans);background:none;border:0;color:var(--color-muted);padding:8px 0;min-height:44px;font-size:12px;cursor:pointer}.ds-text:hover{color:var(--color-ink)}.ds-text:focus-visible{outline:2px solid var(--color-gold);outline-offset:5px;}"
+    },
+    {
+      "name": "Name Field",
+      "kind": "input",
+      "refersTo": "field-name",
+      "description": "Optional personal address field.",
+      "html": "<label class=\"ds-label\" for=\"ds-name\">Wie dürfen wir dich nennen? <span>Optional</span></label><input class=\"ds-name\" id=\"ds-name\" placeholder=\"Dein Vorname\" autocomplete=\"given-name\" maxlength=\"32\">",
+      "css": ".ds-label{font-family:var(--font-sans);display:flex;justify-content:space-between;gap:10px;margin-bottom:11px;font-size:12px;color:var(--color-ink)}.ds-label span{font-size:10px;color:var(--color-muted)}.ds-name{font-family:var(--font-sans);box-sizing:border-box;min-height:52px;width:100%;padding:12px 45px 12px 17px;border:1px solid #42463b;border-radius:var(--radius-control);background:#1d201b;color:var(--color-ink);font-size:14px;caret-color:var(--color-gold);transition:border-color 150ms}.ds-name::placeholder{color:var(--color-muted)}.ds-name:hover{border-color:#777b6d}.ds-name:focus-visible{outline:2px solid var(--color-gold);outline-offset:5px;}"
+    },
+    {
+      "name": "Wordmark Navigation",
+      "kind": "nav",
+      "description": "Compact brand and home affordance.",
+      "html": "<nav><a class=\"ds-wordmark\" href=\"#\"><svg width=\"29\" height=\"29\" viewBox=\"0 0 32 32\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M16 2v28M2 16h28M6.1 6.1l19.8 19.8M6.1 25.9 25.9 6.1\"/><circle cx=\"16\" cy=\"16\" r=\"4.5\" fill=\"var(--color-ground)\"/></svg><span>für gilli<span class=\"ds-dot\">.</span></span></a></nav>",
+      "css": ".ds-wordmark{display:inline-flex;align-items:center;gap:13px;min-height:44px;text-decoration:none;color:var(--color-ink);font-family:var(--font-display);font-size:25px;font-weight:650;letter-spacing:-.04em}.ds-wordmark svg,.ds-dot{color:var(--color-gold)}.ds-wordmark:hover{color:var(--color-ink)}.ds-wordmark:focus-visible{outline:2px solid var(--color-gold);outline-offset:5px;}"
+    },
+    {
+      "name": "Answer Card",
+      "kind": "card",
+      "refersTo": "answer-option",
+      "description": "Large selectable answer with a compact letter badge.",
+      "html": "<button class=\"ds-answer\"><span class=\"ds-letter\">A</span><span class=\"ds-answer-text\">Ein gemeinsamer Lieblingsmoment</span></button>",
+      "css": ".ds-answer{font-family:var(--font-sans);display:flex;align-items:center;gap:13px;min-height:102px;padding:18px;background:var(--color-surface);border:1px solid #3c4136;border-radius:var(--radius-card);color:var(--color-ink);text-align:left;cursor:pointer;transition:background-color 150ms,border-color 150ms,color 150ms}.ds-letter{width:31px;height:31px;flex-shrink:0;border:1px solid #4b5043;border-radius:8px;display:grid;place-items:center;color:#c4c7bb;font-size:11px;font-weight:500}.ds-answer-text{font-size:13px;line-height:1.5}.ds-answer:hover{background:var(--color-surface-hover);border-color:#8e917c}.ds-answer:focus-visible{outline:2px solid var(--color-gold);outline-offset:5px;}.ds-answer:active{transform:scale(.96)}@media(prefers-reduced-motion:reduce){.ds-answer{transition:none}.ds-answer:active{transform:none}}"
+    },
+    {
+      "name": "Progress",
+      "kind": "custom",
+      "refersTo": "progress",
+      "description": "Thin segmented measure of answered questions.",
+      "html": "<div class=\"ds-progress\" role=\"progressbar\" aria-label=\"Quiz-Fortschritt\" aria-valuemin=\"0\" aria-valuemax=\"10\" aria-valuenow=\"4\"><span class=\"ds-fill\"></span></div>",
+      "css": ".ds-progress{height:3px;position:relative;overflow:hidden;border-radius:3px;background:var(--color-line)}.ds-fill{position:absolute;inset:0;background:var(--color-gold);transform-origin:left;transform:scaleX(.4);transition:transform .5s cubic-bezier(.22,1,.36,1)}@media(prefers-reduced-motion:reduce){.ds-fill{transition:none}}"
+    },
+    {
+      "name": "Birthday Seal",
+      "kind": "custom",
+      "description": "Material disk and italic initial, the central keepsake motif.",
+      "html": "<div class=\"ds-seal\"><span class=\"ds-initial\">g.</span><span class=\"ds-caption\">heute & immer</span></div>",
+      "css": ".ds-seal{position:relative;width:230px;height:230px;border-radius:50%;border:1px solid #8a80575c;background:radial-gradient(ellipse at 35% 25%,#444330 0%,#2b3026 50%,#20251e 100%);box-shadow:0 22px 50px -25px #00000085,inset 0 1px 1px #d8c09b21;display:flex;align-items:center;justify-content:center;flex-direction:column}.ds-initial{font-family:var(--font-editorial);font-style:italic;font-size:160px;line-height:.8;color:var(--color-gold);padding-bottom:35px;padding-right:13px}.ds-caption{font-family:var(--font-sans);font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:#d6caaa;position:absolute;bottom:20%}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Birthday Keepsake",
+    "overview": "A personal dedication expressed through dark olive anthracite, warm ivory and champagne. Confident sans-serif typography supplies clarity; a restrained italic serif brings the warmth of a handwritten greeting. The recurring circular seal and geometric star give the interface its own recognizable identity.\n\nThe system pairs generous space with compact supporting information. Controls remain explicit and comfortably sized, and movement quietly marks arrivals, progress and celebration. Fonts ship locally. The palette, typography and component treatments are extracted from `src/styles.css`; motion comes from `src/design/motion.ts` and the React components.",
+    "keyCharacteristics": [
+      "Dark olive surfaces and warm champagne emphasis.",
+      "Manrope structure, DM Sans reading, Instrument Serif sentiment.",
+      "Fine outlines, gently curved controls and a circular keepsake signature.",
+      "Clear feedback with text, symbols and color.",
+      "Short, restrained motion that respects reduced-motion preferences."
+    ],
+    "rules": [
+      {
+        "name": "The Meaningful Feedback Rule",
+        "body": "Correctness always pairs color with an icon and explicit wording.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Do preserve the olive anthracite, ivory and champagne relationship.",
+      "Do use Manrope for structure, DM Sans for reading and Instrument Serif for personal emphasis.",
+      "Do pair feedback color with wording and symbols.",
+      "Do preserve visible keyboard focus and reduced-motion behavior.",
+      "Do keep controls spacious on phones and fonts locally hosted."
+    ],
+    "donts": [
+      "Don't extend the seal's decorative gradient and shadows to ordinary controls.",
+      "Don't replace the quiet identity with saturated accents or dense decoration.",
+      "Don't use color alone to distinguish correct and incorrect answers.",
+      "Don't shrink mobile answer targets to fit the desktop grid.",
+      "Don't invent personal imagery, age or biographical claims as decoration."
+    ]
+  }
+}

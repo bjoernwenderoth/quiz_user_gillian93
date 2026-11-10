@@ -4,7 +4,7 @@ export const screens = ['login', 'identity', 'intro', 'question', 'halfway', 'co
 export type Screen = typeof screens[number]
 export type QuizState = { screen: Screen; index: number; selected: number | null }
 export type QuizAction =
-  | { type: 'login' | 'verified' | 'start' | 'continue' | 'unlock' | 'revealed' | 'tickets' | 'restart' }
+  | { type: 'login' | 'verified' | 'start' | 'continue' | 'unlock' | 'revealed' | 'tickets' | 'back' | 'restart' }
   | { type: 'answer'; option: number; questionIndex: number }
   | { type: 'next'; questionIndex: number }
 
@@ -29,6 +29,7 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
     case 'unlock': return state.screen === 'complete' ? { ...state, screen: 'decrypt' } : state
     case 'revealed': return state.screen === 'decrypt' ? { ...state, screen: 'reveal' } : state
     case 'tickets': return state.screen === 'reveal' ? { ...state, screen: 'tickets' } : state
+    case 'back': return state.screen === 'tickets' ? { ...state, screen: 'reveal' } : state
     case 'restart': return initialState
   }
 }

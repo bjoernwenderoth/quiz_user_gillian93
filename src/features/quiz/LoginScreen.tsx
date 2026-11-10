@@ -2,6 +2,7 @@ import { useRef, useState, type FormEvent } from 'react'
 import { ArrowRight, Eye, EyeOff, LockKeyhole } from 'lucide-react'
 import { motion, useReducedMotion } from 'motion/react'
 import { access } from './content'
+import { requestMotionPermission } from './deviceMotion'
 import { AnimatedButton, ScreenTransition } from '../../components/ui'
 
 type FieldErrors = { email?: string; password?: string; form?: string }
@@ -30,6 +31,8 @@ export function LoginScreen({ onLogin }: { onLogin: () => void }) {
     submitted.current = true
     setChecking(true)
     const valid = email.trim().toLowerCase() === access.email.toLowerCase() && password === access.password
+    // iOS asks for motion access only inside a tap: here it reads as part of the identity check.
+    if (valid) requestMotionPermission()
     window.setTimeout(() => {
       setChecking(false)
       if (!valid) {

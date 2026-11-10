@@ -11,7 +11,6 @@ export const press = { button: 0.97, card: 0.985 } as const
 export const wrongNudge: TargetAndTransition = { x: [0, -5, 4, -2, 0], transition: { duration: 0.36, ease: 'easeOut' } }
 export const storyTiming = {
   finalAnswer: 1100,
-  keyAccepted: 1000,
   keyReady: 1900,
   decrypt: 3000,
 } as const

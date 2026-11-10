@@ -11,14 +11,17 @@ export const finaleMedia = {
   trailer: `${base}media/berlin-lebt-3-trailer.mp4`,
   track: `${base}media/berlin-lebt-3.mp3`,
   poster: `${base}media/berlin-lebt-3.jpg`,
-  /** Second at which the trailer stops and the MP3 continues at the same position (before the presale cards). */
-  cut: 46,
+  /** Heartbeat cut from a recording (scripts/heartbeat.py): four beats on the pulse flashes, echo, impact at the glitch. */
+  heartbeat: `${base}media/heartbeat.m4a`,
+  /** Second of the switch to the reveal: both artists step towards the camera (34.1–34.6 s). The MP3 continues from here. */
+  cut: 34.2,
   /** Volume of the soundtrack after the trailer. iOS ignores this value; the mute button still works. */
   trackVolume: 0.55,
 } as const
 
 let trailer: HTMLVideoElement | null = null
 let track: HTMLAudioElement | null = null
+let heartbeat: HTMLAudioElement | null = null
 
 export function getTrailer() {
   if (!trailer) {
@@ -42,9 +45,17 @@ export function getTrack() {
   return track
 }
 
+export function getHeartbeat() {
+  if (!heartbeat) {
+    heartbeat = new Audio(finaleMedia.heartbeat)
+    heartbeat.preload = 'auto'
+  }
+  return heartbeat
+}
+
 /** Call synchronously inside the unlock click handler. */
 export function primeFinaleMedia() {
-  for (const element of [getTrailer(), getTrack()]) {
+  for (const element of [getHeartbeat(), getTrailer(), getTrack()]) {
     try {
       const pending = element.play()
       element.pause()
@@ -55,6 +66,7 @@ export function primeFinaleMedia() {
 }
 
 export function stopFinaleMedia() {
+  heartbeat?.pause()
   trailer?.pause()
   if (track) { track.pause(); track.currentTime = 0 }
 }

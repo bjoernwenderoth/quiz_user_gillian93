@@ -21,7 +21,7 @@ Der Login wirkt wie ein echter Zugang, prüft aber nur im Browser gegen die Zuga
 
 Falsche Antworten können erneut versucht werden und verraten die richtige Antwort nicht. Richtige Antworten erhöhen den Fortschritt und schalten die Aktion zur nächsten Frage frei. Der Ablauf hat kein Zeitlimit. Nach Frage 5 erscheint die Halbzeit. Nach der richtigen Antwort auf Frage 10 verblassen die übrigen Karten. Nach einem kurzen Erfolgsfeedback folgt automatisch „BERLIN LEBT“, dann die Bestätigung des letzten Schlüssels und erst danach die Freischaltaktion. Das Geschenk bleibt bis zum bewussten Freischalten verborgen.
 
-Der Fortschritt liegt ausschließlich in `sessionStorage` unter `project-x:progress:v1`. Neuladen setzt am aktuellen Screen fort. Bei unterbrochener Entschlüsselung erscheint wieder der Freischalt-Button. Ohne verfügbaren Browserspeicher funktioniert der Ablauf weiterhin, allerdings ohne Wiederherstellung nach Neuladen. Am Ticket-Screen setzt „Neu beginnen“ die Runde zurück.
+Der Fortschritt liegt ausschließlich in `sessionStorage` unter `project-x:progress:v1`. Neuladen setzt am aktuellen Screen fort. Bei unterbrochener Entschlüsselung erscheint wieder der Freischalt-Button. Ohne verfügbaren Browserspeicher funktioniert der Ablauf weiterhin, allerdings ohne Wiederherstellung nach Neuladen. „Neu beginnen“ im Footer (auf allen Screens außer dem Login) setzt die Runde zurück.
 
 ## Inhalte bearbeiten
 
@@ -41,15 +41,18 @@ Dateien in `public/media/` (Steuerung in `src/features/quiz/finaleMedia.ts`):
 
 | Datei | Inhalt |
 | --- | --- |
-| `berlin-lebt-3-trailer.mp4` | Offizieller Trailer, auf 47 s gekürzt, 1280×720 H.264, ca. 16 MB |
+| `berlin-lebt-3-trailer.mp4` | Offizieller Trailer, auf 36 s gekürzt, 1280×720 H.264, ca. 12,5 MB |
 | `berlin-lebt-3.mp3` | Tonspur des Trailers, läuft nach dem Video als Loop weiter |
 | `berlin-lebt-3.jpg` | Tourplakat für Gewinnseite und Geschenktickets |
+| `heartbeat.m4a` | Herzschlag aus `media-src/soundreality-heart-beat-137135.mp3` (Pixabay), zugeschnitten mit `scripts/heartbeat.py`: vier Schläge auf den Lichtimpulsen, Stottern ab Schlag 3, Echo nach dem letzten, verlangsamter Einschlag beim Glitch |
 
 Die Rohdateien (MOV, GIFs) liegen in `media-src/`. Der Ordner wird weder veröffentlicht noch committet.
 
-Ablauf nach „GEWINN FREISCHALTEN“: Herzschlag-Linie aus dem Logo (drei Schläge), Glitch, Wechsel der ganzen App auf Schwarz/Rot. Danach fliegt der Trailer als 3D-Leinwand herein und läuft mit Ton. Bei Sekunde 46 (`finaleMedia.cut`, vor den Vorverkaufs-Einblendungen) oder bei „Überspringen“ übernimmt die MP3 an derselben Stelle. Es folgen die Gewinnseite mit neigbarem Poster und zwei 3D-Geschenktickets zum Umdrehen.
+Ablauf nach „GEWINN FREISCHALTEN“: Herzschlag-Linie aus dem Logo (vier Schläge, das Signal zerfällt zunehmend), Glitch, Wechsel der ganzen App auf Schwarz/Rot. Danach fliegt der Trailer als 3D-Leinwand herein und läuft mit Ton. Bei Sekunde 34,2 (`finaleMedia.cut`), wenn beide auf die Kamera zutreten, oder bei „Überspringen“ übernimmt die MP3 an derselben Stelle. Das Bild läuft stumm weiter, während die Leinwand in die Gewinnseite zoomt. Es folgen die Gewinnseite mit neigbarem Poster und zwei 3D-Geschenktickets zum Umdrehen. Auf Handys reagieren Poster und Tickets auf das Neigen des Geräts (`deviceMotion.ts`), mit der Maus oder per Fingerwisch geht es ebenfalls. iOS fragt dafür einmal nach „Bewegung und Ausrichtung“: Die Abfrage kommt beim Tipp auf „IDENTITÄT BESTÄTIGEN“. Ohne Erlaubnis funktioniert der Fingerwisch weiter.
 
 Der Klick auf „GEWINN FREISCHALTEN“ gibt den Ton frei. Verweigert ein Browser trotzdem den Ton, startet das Video stumm mit sichtbarem „Ton an“. Lädt das Video nicht, geht es direkt zur Gewinnseite weiter. Nach einem Neuladen startet Musik nur über „Musik starten“ oben rechts. Auf dem iPhone ignoriert der Browser die Lautstärke (`trackVolume`); „Ton aus“ funktioniert. Trailer, MP3 und Poster werden erst nach dem Freischalten geladen.
+
+Der Herzschlag ist exakt auf die Animation geschnitten: Schläge bei 1,8 / 3,6 / 5,1 / 6,3 s, immer schneller und lauter, ab Schlag 3 bricht das Signal auf, bei 7,2 s folgt der volle Glitch. Die Zeiten stehen zentral in `pulseTimeline` (`src/features/quiz/berlin.ts`). Wer sie ändert, passt `scripts/heartbeat.py` an und erzeugt die Datei neu (Befehle stehen oben im Skript). Bei reduzierter Bewegung entfällt der Sound, weil die Animation dort kürzer ist.
 
 Trailer neu kürzen: `media-src/video/video.mov` mit einem Encoder auf H.264/AAC mit Fast-Start umwandeln und die Datei gleichen Namens ersetzen.
 
@@ -95,7 +98,7 @@ npm run build
 npm run test:e2e
 ```
 
-Beim ersten Playwright-Einsatz gegebenenfalls `npx playwright install chromium` ausführen. Die Tests verwenden den Produktionsbuild auf Port 4173. Abgedeckt sind der vollständige Ablauf, falsche und richtige Antworten, Halbzeit, Session-Wiederherstellung, blockierter Speicher, beschädigte Daten, bewusste Freischaltung, Tastaturbedienung, reduzierte Bewegung, schmale Ansichten sowie der Download einer echten PNG-Datei. Mobiltests verwenden Chromium mit iPhone-Viewport; eine Prüfung auf einem echten iPhone/Safari ergänzt diese Simulation sinnvoll.
+Beim ersten Playwright-Einsatz gegebenenfalls `npx playwright install chromium webkit` ausführen. Die Tests laufen in drei Projekten: Desktop-Chrome, iPhone-Viewport mit Chromium und iPhone-Viewport mit WebKit (Safari-Engine). Die Tests verwenden den Produktionsbuild auf Port 4173. Abgedeckt sind der vollständige Ablauf, falsche und richtige Antworten, Halbzeit, Session-Wiederherstellung, blockierter Speicher, beschädigte Daten, bewusste Freischaltung, Tastaturbedienung, reduzierte Bewegung, schmale Ansichten sowie der Download einer echten PNG-Datei. WebKit deckt die Safari-Engine ab, ersetzt aber keinen Test auf einem echten iPhone (Ton, Bewegungssensor, Download-Verhalten).
 
 Semantische Formulare, beschriftete Eingaben, sichtbare Fokuszustände, Fokus auf neuen Überschriften und Live-Feedback sind vorhanden. Systemseitig reduzierte Bewegung wird respektiert. Lokale Bilder und Schriften vermeiden externe Requests während der Challenge.
 

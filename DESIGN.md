@@ -55,7 +55,7 @@ Das Finale zeigt auf Desktop das Tourmotiv links und die Widmung/Veranstaltung r
 - Zustandsfarben: 150 ms; ungewählte Antworten verblassen nach Erfolg über 400 ms.
 - Fortschritt: 500 ms über `scaleX`, ohne Änderung der Layoutbreite.
 - Letzte Antwort: einmalige 850-ms-Erfolgslinie, anschließend nach 1100 ms Schlüsselbildschirm.
-- Schlüssel: Titel zuerst, Bestätigung nach 1000 ms, Freischaltaktion nach 1900 ms.
+- Schlüssel: „LETZTER SCHLÜSSEL AKZEPTIERT.“ zuerst, nach 1900 ms Häkchen mit „10 / 10 Level abgeschlossen“ und Freischaltaktion.
 - Schlüssel: Header und Footer treten auf 35 % zurück.
 - Entschlüsselung: 3000 ms, ein Lichtimpuls und eine Fortschrittsspur; Header, Footer und Musikhinweis blenden aus, die Headline lautet „DEIN GEWINN WIRD ENTSCHLÜSSELT.“
 - Reveal: Motiv, Widmung, Konzertdaten, Nachricht und Ticketaktion im Abstand von 500 ms. Die Ticketaktion wird erst nach ihrem Eintritt bedienbar.
@@ -76,6 +76,6 @@ Zwei klar gekennzeichnete Geschenkversprechen für Gillian und Begleitung +1. Ke
 
 Mit „GEWINN FREISCHALTEN“ wechselt die App per `data-world="berlin"` auf eigene Tokens: Grund `#070707`, Rot `#e3141f` (Text `#ff3341`), Buttons rot mit weißer Schrift. Überschriften: Manrope 800, Versalien, `skewX(-8deg)` als Anlehnung an die kursive Tour-Typografie. Leitmotiv ist die EKG-Linie aus dem Logo („LEBT“) als Übergang, Trenner und Ticket-Element.
 
-Sequenz: 3,3 s Herzschlag (drei Schläge mit rotem Lichtimpuls) → 0,8 s Glitch (RGB-Versatz, Scanlines, rote Blitze) → Trailer fliegt in 3D herein (rotateX 32° → 0, 1,3 s) → bei 46 s roter Blitz, MP3 übernimmt → Gewinnseite mit Poster (Neigung bis 7°, Lichtreflex) und „Slam“-Texten (Skalierung und Unschärfe auf scharf, 320 ms Staffelung) → zwei Tickets mit 3D-Neigung, Holo-Glanz und Umdrehen. Reduced Motion: kein Glitch, keine Neigung, kein Rauch, kurze Überblendungen; das Video bleibt.
+Sequenz: 7,2 s Herzschlag (vier Schläge bei 1,8 / 3,6 / 5,1 / 6,3 s, Abstand und Ruhe nehmen ab, roter Schein wächst; Schlag 3 flackert, Schlag 4 zerreißt Linie und Text) → 1 s Glitch (RGB-Versatz, Scanlines, rote Blitze) → Trailer fliegt in 3D herein (rotateX 32° → 0, 1,3 s) → bei 34,2 s (beide treten auf die Kamera zu) roter Blitz und Zoom, das Bild läuft stumm weiter, MP3 übernimmt → Gewinnseite mit Poster (Neigung bis 7°, Lichtreflex) und „Slam“-Texten (Skalierung und Unschärfe auf scharf, 320 ms Staffelung) → zwei Tickets mit 3D-Neigung, Holo-Glanz und Umdrehen. Reduced Motion: kein Glitch, keine Neigung, kein Rauch, kurze Überblendungen; das Video bleibt.
 
 Der Export zeigt die Ticket-Vorderseite im Berlin-lebt-3-Branding (Poster, Logo, EKG-Linie, Daten) als 1080 px breites PNG.

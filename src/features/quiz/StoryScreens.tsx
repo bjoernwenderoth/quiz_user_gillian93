@@ -35,18 +35,14 @@ export function CompletionScreen({ onUnlock }: { onUnlock: () => void }) {
   const reduced = useReducedMotion()
   const [stage, setStage] = useState(0)
   useEffect(() => {
-    const accepted = window.setTimeout(() => setStage(1), reduced ? 200 : storyTiming.keyAccepted)
     const ready = window.setTimeout(() => setStage(2), reduced ? 400 : storyTiming.keyReady)
-    return () => { clearTimeout(accepted); clearTimeout(ready) }
+    return () => clearTimeout(ready)
   }, [reduced])
   return <ScreenTransition className="story-screen completion-screen">
     <div className="key-line" aria-hidden="true" />
-    <motion.h1 initial={{ opacity: 0, y: reduced ? 0 : 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduced ? 0.1 : 0.9, ease }}>BERLIN<br /><span className="gold">LEBT.</span></motion.h1>
-    <div className="key-confirmation" role="status" aria-live="polite">
-      <motion.p className="accepted-key" initial={{ opacity: 0 }} animate={{ opacity: stage >= 1 ? 1 : 0 }}><Check size={15} />{stage >= 1 ? 'LETZTER SCHLÜSSEL AKZEPTIERT' : ''}</motion.p>
-    </div>
+    <motion.h1 initial={{ opacity: 0, y: reduced ? 0 : 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduced ? 0.1 : 0.9, ease }}>LETZTER<br />SCHLÜSSEL<br /><span className="gold">AKZEPTIERT.</span></motion.h1>
     <motion.div className="unlock-content" initial={{ opacity: 0 }} animate={{ opacity: stage >= 2 ? 1 : 0 }} transition={{ duration: reduced ? 0.1 : 0.5 }}>
-      <p className="completion-count">10 / 10 Level abgeschlossen</p>
+      <p className="completion-count" role="status"><Check size={15} />10 / 10 Level abgeschlossen</p>
       <p className="story-copy">Du hast alle Schlüssel gefunden.</p>
       <AnimatedButton disabled={stage < 2} onClick={onUnlock}>GEWINN FREISCHALTEN <ArrowRight size={17} /></AnimatedButton>
     </motion.div>

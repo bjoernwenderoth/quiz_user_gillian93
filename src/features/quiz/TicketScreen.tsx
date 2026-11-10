@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useRef, useState } from 'react'
-import { ArrowDownToLine, ArrowUpRight, Check, RotateCcw } from 'lucide-react'
+import { ArrowDownToLine, ArrowLeft, ArrowUpRight, Check, RotateCcw } from 'lucide-react'
 import { toBlob } from 'html-to-image'
 import { motion, useReducedMotion } from 'motion/react'
 import { AnimatedButton, ScreenTransition } from '../../components/ui'
@@ -59,7 +59,7 @@ function TicketCard({ companion = false, index }: { companion?: boolean; index: 
   </motion.div>
 }
 
-export function TicketScreen() {
+export function TicketScreen({ onBack }: { onBack: () => void }) {
   const ticketRef = useRef<HTMLElement>(null)
   const exporting = useRef(false)
   const posterReady = useRef<Promise<void>>(Promise.resolve())
@@ -95,7 +95,8 @@ export function TicketScreen() {
   }
 
   return <ScreenTransition className="tickets-screen">
-    <h1 className="slam-title">EIN ABEND.<br /><span className="accent">ZWEI PLÄTZE FÜR EUCH.</span></h1>
+    <button type="button" className="back-button" onClick={onBack}><ArrowLeft size={16} />Zurück zum Gewinn</button>
+    <h1 className="slam-title">EIN ABEND.<br /><span className="accent">ZWEI PLÄTZE.</span></h1>
     <p className="story-copy">Hamburg. Laut mitsingen. Erinnerungen mitnehmen.</p>
     <div className="ticket-grid"><TicketCard index={0} /><TicketCard companion index={1} /></div>
     <p className="ticket-hint">Wisch über ein Ticket oder dreh es um.</p>

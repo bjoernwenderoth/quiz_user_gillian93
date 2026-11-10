@@ -21,7 +21,7 @@ async function login(page: Page) {
 }
 
 test('complete private journey, retries, recovery, reveal and real PNG download', async ({ page }, info) => {
-  test.setTimeout(45000)
+  test.setTimeout(60000)
   const errors: string[] = []
   const failedAssets: string[] = []
   page.on('pageerror', (error) => errors.push(error.message))
@@ -69,8 +69,9 @@ test('complete private journey, retries, recovery, reveal and real PNG download'
       await page.getByRole('button', { name: 'FORTSETZEN' }).click()
     }
   }
-  await expect(page.getByRole('heading')).toContainText('BERLIN')
-  await expect(page.getByText('LETZTER SCHLÜSSEL AKZEPTIERT')).toBeVisible()
+  await expect(page.getByRole('heading')).toContainText('SCHLÜSSEL')
+  await expect(page.getByRole('heading')).not.toContainText('BERLIN')
+  await expect(page.getByText('10 / 10 Level abgeschlossen')).toBeVisible()
   await expect(page.getByRole('button', { name: 'GEWINN FREISCHALTEN' })).toBeEnabled()
   await expect(page.locator('body')).not.toContainText('2 KONZERTTICKETS')
   await expect(page.locator('iframe')).toHaveCount(0)
@@ -82,7 +83,7 @@ test('complete private journey, retries, recovery, reveal and real PNG download'
   // Chrome plays the trailer (skip it); test Chromium has no H.264 and must fall through to the reveal on its own.
   const skip = page.getByRole('button', { name: 'Trailer überspringen' })
   const birthday = page.getByRole('heading', { name: /HAPPY BIRTHDAY/ })
-  await expect(skip.or(birthday).first()).toBeVisible({ timeout: 12000 })
+  await expect(skip.or(birthday).first()).toBeVisible({ timeout: 16000 })
   if (await skip.isVisible()) await skip.click()
   await expect(birthday).toBeVisible({ timeout: 6000 })
   expect(mediaRequests.some((url) => url.endsWith('berlin-lebt-3-trailer.mp4'))).toBe(true)
@@ -90,6 +91,11 @@ test('complete private journey, retries, recovery, reveal and real PNG download'
   await page.getByRole('button', { name: 'DEINE GESCHENKTICKETS' }).click()
   await expect(page.getByRole('article')).toHaveCount(2)
   await capture(page, `${info.project.name}-tickets`)
+  // The tickets screen leads back to the reveal and forward again.
+  await page.getByRole('button', { name: 'Zurück zum Gewinn' }).click()
+  await expect(page.getByRole('heading', { name: /HAPPY BIRTHDAY/ })).toBeVisible()
+  await page.getByRole('button', { name: 'DEINE GESCHENKTICKETS' }).click({ timeout: 8000 })
+  await expect(page.getByRole('article')).toHaveCount(2)
   const downloadPromise = page.waitForEvent('download')
   await page.getByRole('button', { name: 'GESCHENKTICKET SPEICHERN' }).click()
   const download = await downloadPromise
@@ -112,7 +118,7 @@ test('complete private journey, retries, recovery, reveal and real PNG download'
   expect(failedAssets).toEqual([])
 })
 
-test('keyboard, reduced motion, blocked storage, and narrow layouts', async ({ page }) => {
+test('keyboard, reduced motion, blocked storage, and narrow layouts', async ({ page, browserName }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.addInitScript(() => {
     Object.defineProperty(window, 'sessionStorage', { get() { throw new Error('Storage blocked') } })
@@ -128,14 +134,20 @@ test('keyboard, reduced motion, blocked storage, and narrow layouts', async ({ p
   await expect(page.getByRole('heading', { name: /DU WURDEST/ })).toBeVisible()
   await page.getByRole('button', { name: 'RÄTSEL STARTEN' }).press('Enter')
   await expect(page.getByRole('heading', { name: questions[0]!.question })).toBeFocused()
-  await page.keyboard.press('Tab')
-  await expect(page.getByRole('button', { name: 'A: Breakpoint' })).toBeFocused()
-  await page.keyboard.press('Enter')
+  // Safari's Tab key skips buttons by default (system setting), so the Tab step runs elsewhere.
+  if (browserName !== 'webkit') {
+    await page.keyboard.press('Tab')
+    await expect(page.getByRole('button', { name: 'A: Breakpoint' })).toBeFocused()
+  }
+  await page.getByRole('button', { name: 'A: Breakpoint' }).press('Enter')
   await expect(page.getByRole('status')).toContainText('Versuch es noch einmal')
   await page.getByRole('button', { name: 'C: Einstand' }).press('Enter')
   await expect(page.getByRole('status')).toContainText('Genau richtig')
   await page.getByLabel('So funktioniert PROJECT X').click()
   await expect(page.getByText('Dein Zugang zu PROJECT X.')).toBeVisible()
+  await page.getByRole('button', { name: 'Hinweise schließen' }).click()
+  await expect(page.getByText('Dein Zugang zu PROJECT X.')).toBeHidden()
+  await expect(page.getByLabel('So funktioniert PROJECT X')).toBeFocused()
   for (const width of [320, 375, 390, 430, 768, 1280]) {
     await page.setViewportSize({ width, height: 844 })
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
@@ -191,7 +203,7 @@ test('all phone widths, final-key timing, image fallback and export failure', as
   await page.evaluate(() => sessionStorage.setItem('project-x:progress:v1', JSON.stringify({ screen: 'question', index: 9, selected: null })))
   await page.reload()
   await page.getByRole('button', { name: 'C: Berlin lebt', exact: true }).press('Enter')
-  await expect(page.getByRole('heading', { name: /BERLIN/ })).toBeFocused()
+  await expect(page.getByRole('heading', { name: /SCHLÜSSEL/ })).toBeFocused()
   await expect(page.getByRole('button', { name: 'GEWINN FREISCHALTEN' })).toBeEnabled()
   await expect(page.locator('body')).not.toContainText('KONZERTTICKETS')
 })

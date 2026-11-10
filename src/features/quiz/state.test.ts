@@ -45,6 +45,8 @@ describe('PROJECT X progression', () => {
     expect(state.screen).toBe('reveal')
     state = quizReducer(state, { type: 'tickets' })
     expect(state.screen).toBe('tickets')
+    expect(quizReducer(state, { type: 'back' }).screen).toBe('reveal')
+    expect(quizReducer(initialState, { type: 'back' })).toBe(initialState)
     expect(quizReducer(state, { type: 'restart' })).toBe(initialState)
   })
   it('restores valid progress and safely discards corrupt or inconsistent sessions', () => {

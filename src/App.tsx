@@ -1,6 +1,6 @@
-import { useCallback } from 'react'
+import { useCallback, type MouseEvent } from 'react'
 import { AnimatePresence } from 'motion/react'
-import { ArrowUpRight, HelpCircle, LockKeyhole } from 'lucide-react'
+import { ArrowUpRight, HelpCircle, LockKeyhole, X } from 'lucide-react'
 import { IntroScreen } from './features/quiz/IntroScreen'
 import { LoginScreen } from './features/quiz/LoginScreen'
 import { QuestionScreen } from './features/quiz/QuestionScreen'
@@ -10,7 +10,7 @@ import { MusicPlayer } from './features/quiz/MusicPlayer'
 import { CompletionScreen, HalfwayScreen, IdentityScreen } from './features/quiz/StoryScreens'
 import { FinaleSequence } from './features/quiz/FinaleSequence'
 import { primeFinaleMedia, stopFinaleMedia } from './features/quiz/finaleMedia'
-import { questions } from './features/quiz/content'
+import { assetUrl, questions } from './features/quiz/content'
 import { useQuiz } from './features/quiz/useQuiz'
 
 export function App() {
@@ -20,6 +20,12 @@ export function App() {
   const next = useCallback(() => dispatch({ type: 'next', questionIndex: state.index }), [dispatch, state.index])
   const final = ['decrypt', 'reveal', 'tickets'].includes(state.screen)
   const gift = state.screen === 'reveal' || state.screen === 'tickets'
+  // Closes the help popover and returns focus to its toggle.
+  function closeHelp(event: MouseEvent<HTMLButtonElement>) {
+    const details = event.currentTarget.closest('details')
+    details?.removeAttribute('open')
+    details?.querySelector('summary')?.focus()
+  }
   function restart() { stopFinaleMedia(); dispatch({ type: 'restart' }) }
   // Must stay synchronous inside the click: unlocks trailer sound for the whole finale.
   function unlock() { primeFinaleMedia(); dispatch({ type: 'unlock' }) }
@@ -41,15 +47,18 @@ export function App() {
         {state.screen === 'complete' && <CompletionScreen key="complete" onUnlock={unlock} />}
         {state.screen === 'decrypt' && <FinaleSequence key="decrypt" onComplete={revealed} />}
         {state.screen === 'reveal' && <ResultScreen key="reveal" onTickets={() => dispatch({ type: 'tickets' })} />}
-        {state.screen === 'tickets' && <TicketScreen key="tickets" />}
+        {state.screen === 'tickets' && <TicketScreen key="tickets" onBack={() => dispatch({ type: 'back' })} />}
       </AnimatePresence>
     </main>
     {gift && <div className="berlin-smoke" aria-hidden="true"><span /><span /><span /></div>}
     {gift && <p className="finale-tagline">Dein Geschenk. Dein Konzert. Dein Moment.</p>}
-    <footer className="site-footer"><span>PROJECT X <span className="footer-divider">/</span> {final ? 'Ein Moment, der bleibt.' : 'Das Beste bleibt verborgen.'}</span><div className="footer-right">
-      {state.screen === 'tickets' && <button className="text-button" onClick={restart}>Neu beginnen <ArrowUpRight size={14} /></button>}
-      <details className="help"><summary aria-label="So funktioniert PROJECT X"><HelpCircle size={17} /><span>Hinweise</span></summary><div className="help-content"><strong>Dein Zugang zu PROJECT X.</strong><p>Melde dich mit der E-Mail-Adresse und dem Passwort aus deiner persönlichen Einladung an. Der Zugang ist nur für dich bestimmt.</p><p>Zehn Fragen. Kein Zeitlimit. Falsche Antworten kannst du erneut versuchen. Dein Fortschritt wird für diese Sitzung gespeichert.</p><p>Probleme beim Login? Wende dich an die Person, von der du deine Einladung erhalten hast.</p></div></details>
-    </div></footer>
+    <footer className="site-footer"><span>PROJECT X <span className="footer-divider">/</span> {final ? 'Ein Moment, der bleibt.' : 'Das Beste bleibt verborgen.'}</span>
+      <a className="footer-credit" href="https://bjoern-wenderoth.de" target="_blank" rel="noopener noreferrer" aria-label="Creative & Code – bjoern-wenderoth.de (öffnet in neuem Tab)"><img src={assetUrl('images/creativeandcode-logo.png')} alt="" width="474" height="283" /></a>
+      <div className="footer-right">
+      {state.screen !== 'login' && <button className="text-button" onClick={restart}>Neu beginnen <ArrowUpRight size={14} /></button>}
+      <details className="help"><summary aria-label="So funktioniert PROJECT X"><HelpCircle size={17} /><span>Hinweise</span></summary><div className="help-content"><button type="button" className="help-close" aria-label="Hinweise schließen" onClick={closeHelp}><X size={16} /></button><strong>Dein Zugang zu PROJECT X.</strong><p>Melde dich mit der E-Mail-Adresse und dem Passwort aus deiner persönlichen Einladung an. Der Zugang ist nur für dich bestimmt.</p><p>Zehn Fragen. Kein Zeitlimit. Falsche Antworten kannst du erneut versuchen. Dein Fortschritt wird für diese Sitzung gespeichert.</p><p>Probleme beim Login? Wende dich an die Person, von der du deine Einladung erhalten hast.</p></div></details>
+    </div>
+    </footer>
   </div>
 }
 

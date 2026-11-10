@@ -104,9 +104,9 @@ Semantische Formulare, beschriftete Eingaben, sichtbare Fokuszustände, Fokus au
 
 ## GitHub Pages
 
-`vite.config.ts` verwendet weiterhin `base: '/quiz_user_gillian93/'`. Der vorhandene manuell gestartete Workflow `.github/workflows/pages.yml` baut und veröffentlicht `dist/`. Vor der ersten Veröffentlichung im Repository **Settings → Pages → Source: GitHub Actions** wählen und den Deploy-Workflow manuell starten. Bei Umbenennung des Repositorys auch `base` und die Test-URLs in `playwright.config.ts` anpassen.
+`vite.config.ts` verwendet weiterhin `base: '/quiz_user_gillian93/'`. Der Workflow `.github/workflows/pages.yml` baut und veröffentlicht `dist/` bei jedem Push auf `main` (nach Lint, Unit-Tests und Build); manuell startbar ist er ebenfalls. Vor der ersten Veröffentlichung im Repository **Settings → Pages → Source: GitHub Actions** wählen. Bei Umbenennung des Repositorys auch `base` und die Test-URLs in `playwright.config.ts` anpassen.
 
-Es wurde nichts gepusht oder veröffentlicht. `DESIGN.md` dokumentiert das aktuelle Designsystem. Die Bestandsaufnahme, Änderungen und tatsächlich ausgeführten Prüfungen stehen in `PROJECT-X.md`.
+`DESIGN.md` dokumentiert das aktuelle Designsystem. Die Bestandsaufnahme, Änderungen und tatsächlich ausgeführten Prüfungen stehen in `PROJECT-X.md`.
 
 ## Noch zu befüllen
 

@@ -35,17 +35,23 @@ Die zehn Bilder liegen lokal unter `public/images/questions/`. Es sind austausch
 
 Eine Datei mit gleichem Namen ersetzen oder `image` und `imageAlt` im Fragenkatalog anpassen. Empfehlenswert sind JPEG/WebP, mindestens 1000 px Breite und ein mittig platziertes Motiv. Die Ansicht vereinheitlicht die Motive über Ausschnitt, reduzierte Sättigung und ein dunkles Overlay. Sämtliche URLs nutzen Vites `BASE_URL` und funktionieren im GitHub-Pages-Unterverzeichnis. Ein nicht ladendes Bild lässt eine ruhige, weiterhin bedienbare Motivfläche stehen.
 
-### Musik
+### Finale: Trailer, Musik und Berlin-lebt-3-Look
 
-Noch keine endgültige Quelle hinterlegt. In `content.ts` die **11-stellige YouTube-Video-ID eines offiziellen, einbettbaren Trailers** setzen:
+Dateien in `public/media/` (Steuerung in `src/features/quiz/finaleMedia.ts`):
 
-```ts
-export const music: { youtubeVideoId: string | null } = {
-  youtubeVideoId: null, // Hier die offizielle Video-ID als Zeichenfolge eintragen.
-}
-```
+| Datei | Inhalt |
+| --- | --- |
+| `berlin-lebt-3-trailer.mp4` | Offizieller Trailer, auf 47 s gekürzt, 1280×720 H.264, ca. 16 MB |
+| `berlin-lebt-3.mp3` | Tonspur des Trailers, läuft nach dem Video als Loop weiter |
+| `berlin-lebt-3.jpg` | Tourplakat für Gewinnseite und Geschenktickets |
 
-Erst der Klick auf „GEWINN FREISCHALTEN“ aktiviert den YouTube-No-Cookie-Player mit Autoplay-Anfrage. Zuvor gibt es keine Verbindung zu YouTube. Nach einem Reload startet Musik nie selbst; „MUSIK STARTEN“ aktiviert den Player erneut. Browser können Autoplay trotzdem blockieren; sichtbare Player-Steuerung erlaubt dann den manuellen Start. Der Player kann geschlossen und wieder gestartet werden. Ohne gültige ID erscheint nach dem Freischalten ein klarer Soundtrack-Platzhalter. Keine lokale Originalmusik wird mitgeliefert.
+Die Rohdateien (MOV, GIFs) liegen in `media-src/`. Der Ordner wird weder veröffentlicht noch committet.
+
+Ablauf nach „GEWINN FREISCHALTEN“: Herzschlag-Linie aus dem Logo (drei Schläge), Glitch, Wechsel der ganzen App auf Schwarz/Rot. Danach fliegt der Trailer als 3D-Leinwand herein und läuft mit Ton. Bei Sekunde 46 (`finaleMedia.cut`, vor den Vorverkaufs-Einblendungen) oder bei „Überspringen“ übernimmt die MP3 an derselben Stelle. Es folgen die Gewinnseite mit neigbarem Poster und zwei 3D-Geschenktickets zum Umdrehen.
+
+Der Klick auf „GEWINN FREISCHALTEN“ gibt den Ton frei. Verweigert ein Browser trotzdem den Ton, startet das Video stumm mit sichtbarem „Ton an“. Lädt das Video nicht, geht es direkt zur Gewinnseite weiter. Nach einem Neuladen startet Musik nur über „Musik starten“ oben rechts. Auf dem iPhone ignoriert der Browser die Lautstärke (`trackVolume`); „Ton aus“ funktioniert. Trailer, MP3 und Poster werden erst nach dem Freischalten geladen.
+
+Trailer neu kürzen: `media-src/video/video.mov` mit einem Encoder auf H.264/AAC mit Fast-Start umwandeln und die Datei gleichen Namens ersetzen.
 
 ### Nachricht und Tickets
 
@@ -68,7 +74,10 @@ Beide Karten sind als symbolische Geschenktickets gekennzeichnet und keine Eintr
 | `src/features/quiz/StoryScreens.tsx` | Verifikation, Halbzeit, Abschluss und Entschlüsselung |
 | `src/features/quiz/ResultScreen.tsx` | Gestaffelte Konzert-Enthüllung und persönliche Botschaft |
 | `src/features/quiz/TicketScreen.tsx` | Beide Geschenktickets, PNG-Export und mobile Speicherhilfe |
-| `src/features/quiz/MusicPlayer.tsx` | Optionales offizielles Embed und Platzhalter |
+| `src/features/quiz/FinaleSequence.tsx` | Herzschlag, Glitch-Switch, Trailer und Übergabe an die MP3 |
+| `src/features/quiz/finaleMedia.ts` | Medienpfade, Schnittpunkt, Ton-Freigabe im Klick |
+| `src/features/quiz/berlin.ts`, `berlinUi.tsx` | EKG-Linie aus dem Logo, 3D-Neigung |
+| `src/features/quiz/MusicPlayer.tsx` | Ton-an/aus und Musik-starten im Finale |
 | `src/styles.css`, `src/design/motion.ts` | Responsive Darstellung, bestehende Farbwelt und Animationen |
 | `index.html`, `public/favicon.svg` | Geheimniswahrende Metadaten und PROJECT-X-Signet |
 | `public/images/questions/` | Zehn lokale, austauschbare Motivbilder und Herkunftsnachweise |
@@ -98,7 +107,6 @@ Es wurde nichts gepusht oder veröffentlicht. `DESIGN.md` dokumentiert das aktue
 
 ## Noch zu befüllen
 
-- Offizielle Trailer-Video-ID, falls Musik gewünscht ist.
 - Optional eine persönlichere Geburtstagsnachricht.
 - Optional eigene Bilder statt der bereits eingebundenen Stockmotive.
 

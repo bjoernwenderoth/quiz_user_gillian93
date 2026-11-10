@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Check, ArrowRight, Fingerprint, LockKeyhole } from 'lucide-react'
+import { Check, ArrowRight, Fingerprint } from 'lucide-react'
 import { motion, useReducedMotion } from 'motion/react'
 import { AnimatedButton, ScreenTransition } from '../../components/ui'
 import { ease, storyTiming } from '../../design/motion'
@@ -52,18 +52,3 @@ export function CompletionScreen({ onUnlock }: { onUnlock: () => void }) {
     </motion.div>
   </ScreenTransition>
 }
-
-export function DecryptScreen({ onComplete }: { onComplete: () => void }) {
-  const reduced = useReducedMotion()
-  useEffect(() => {
-    const timer = window.setTimeout(onComplete, reduced ? 800 : storyTiming.decrypt)
-    return () => clearTimeout(timer)
-  }, [onComplete, reduced])
-  return <ScreenTransition className="story-screen decrypt-screen">
-    <motion.div className="decrypt-pulse" aria-hidden="true" initial={{ opacity: 0 }} animate={{ opacity: reduced ? 0.4 : [0, 0.7, 0.2] }} transition={{ duration: reduced ? 0.1 : 2.6 }} /><div className="story-symbol"><LockKeyhole size={32} /></div>
-    <h1>DEIN GEWINN<br /><span className="gold">WIRD ENTSCHLÜSSELT.</span></h1>
-    <p className="story-lead" role="status">Einen Moment noch.</p>
-    <div className="decrypt-track" aria-hidden="true"><motion.span initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: reduced ? 0.1 : 2.5, ease }} /></div>
-  </ScreenTransition>
-}
-

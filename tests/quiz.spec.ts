@@ -26,6 +26,8 @@ test('complete private journey, retries, recovery, reveal and real PNG download'
   const failedAssets: string[] = []
   page.on('pageerror', (error) => errors.push(error.message))
   page.on('response', (response) => { if (response.status() >= 400 && response.url().includes('/images/')) failedAssets.push(response.url()) })
+  const mediaRequests: string[] = []
+  page.on('request', (request) => { if (request.url().includes('/media/')) mediaRequests.push(request.url()) })
   await page.goto('./')
   await capture(page, info.project.name)
   await expect(page.locator('body')).not.toContainText('HAPPY BIRTHDAY')
@@ -73,9 +75,17 @@ test('complete private journey, retries, recovery, reveal and real PNG download'
   await expect(page.locator('body')).not.toContainText('2 KONZERTTICKETS')
   await expect(page.locator('iframe')).toHaveCount(0)
   await capture(page, `${info.project.name}-complete`)
+  // Trailer, soundtrack and poster must not load before the unlock: nothing may hint at the gift.
+  expect(mediaRequests).toEqual([])
   await page.getByRole('button', { name: 'GEWINN FREISCHALTEN' }).click()
   await expect(page.getByRole('heading')).toContainText('ENTSCHLÜSSELT')
-  await expect(page.getByRole('heading', { name: /HAPPY BIRTHDAY/ })).toBeVisible({ timeout: 6000 })
+  // Chrome plays the trailer (skip it); test Chromium has no H.264 and must fall through to the reveal on its own.
+  const skip = page.getByRole('button', { name: 'Trailer überspringen' })
+  const birthday = page.getByRole('heading', { name: /HAPPY BIRTHDAY/ })
+  await expect(skip.or(birthday).first()).toBeVisible({ timeout: 12000 })
+  if (await skip.isVisible()) await skip.click()
+  await expect(birthday).toBeVisible({ timeout: 6000 })
+  expect(mediaRequests.some((url) => url.endsWith('berlin-lebt-3-trailer.mp4'))).toBe(true)
   await capture(page, `${info.project.name}-reveal`)
   await page.getByRole('button', { name: 'DEINE GESCHENKTICKETS' }).click()
   await expect(page.getByRole('article')).toHaveCount(2)

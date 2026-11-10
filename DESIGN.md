@@ -72,4 +72,10 @@ Neue Screens fokussieren ihre Überschrift. Semantische Buttons, `aria-pressed`,
 
 Zwei klar gekennzeichnete Geschenkversprechen für Gillian und Begleitung +1. Keine Barcodes, QR-Codes, Sitzplätze oder Ticketnummern. Die sichtbaren Tickets passen sich dem Display an. Eine separate, für Assistenztechnik und Interaktion ausgeblendete 540-px-Vorlage liefert mit Pixelratio 2 immer ein 1080 px breites PNG. Die Vorlage verwendet dieselbe Komponente, explizite linksbündige Typografie und exporteigene feste Schriftgrößen. Sie enthält keine Bedienknöpfe.
 
-Musik bleibt optional. Ohne konfigurierte offizielle Quelle funktioniert die vollständige Inszenierung still. Mit Quelle wird ein sichtbarer, stoppbarer YouTube-Player erst nach Nutzeraktion geladen; eine Autoplay-Garantie wird nicht gegeben.
+## Berlin-lebt-3-Welt (ab dem Freischalten)
+
+Mit „GEWINN FREISCHALTEN“ wechselt die App per `data-world="berlin"` auf eigene Tokens: Grund `#070707`, Rot `#e3141f` (Text `#ff3341`), Buttons rot mit weißer Schrift. Überschriften: Manrope 800, Versalien, `skewX(-8deg)` als Anlehnung an die kursive Tour-Typografie. Leitmotiv ist die EKG-Linie aus dem Logo („LEBT“) als Übergang, Trenner und Ticket-Element.
+
+Sequenz: 3,3 s Herzschlag (drei Schläge mit rotem Lichtimpuls) → 0,8 s Glitch (RGB-Versatz, Scanlines, rote Blitze) → Trailer fliegt in 3D herein (rotateX 32° → 0, 1,3 s) → bei 46 s roter Blitz, MP3 übernimmt → Gewinnseite mit Poster (Neigung bis 7°, Lichtreflex) und „Slam“-Texten (Skalierung und Unschärfe auf scharf, 320 ms Staffelung) → zwei Tickets mit 3D-Neigung, Holo-Glanz und Umdrehen. Reduced Motion: kein Glitch, keine Neigung, kein Rauch, kurze Überblendungen; das Video bleibt.
+
+Der Export zeigt die Ticket-Vorderseite im Berlin-lebt-3-Branding (Poster, Logo, EKG-Linie, Daten) als 1080 px breites PNG.

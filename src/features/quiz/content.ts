@@ -34,6 +34,4 @@ export const gift = {
   message: 'Alles Gute zum Geburtstag!',
 }
 
-/** Video-ID eines offiziellen, einbettbaren Trailers. Der Player lädt erst nach einem Klick. */
-export const music: { youtubeVideoId: string | null } = { youtubeVideoId: null }
 

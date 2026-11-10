@@ -4,7 +4,7 @@ export const screens = ['login', 'identity', 'intro', 'question', 'halfway', 'co
 export type Screen = typeof screens[number]
 export type QuizState = { screen: Screen; index: number; selected: number | null }
 export type QuizAction =
-  | { type: 'login' | 'verified' | 'start' | 'continue' | 'unlock' | 'revealed' | 'tickets' | 'back' | 'restart' }
+  | { type: 'login' | 'verified' | 'start' | 'continue' | 'unlock' | 'revealed' | 'tickets' | 'back' | 'rewind' | 'restart' }
   | { type: 'answer'; option: number; questionIndex: number }
   | { type: 'next'; questionIndex: number }
 
@@ -17,13 +17,18 @@ export function quizReducer(state: QuizState, action: QuizAction): QuizState {
     case 'verified': return state.screen === 'identity' ? { ...state, screen: 'intro' } : state
     case 'start': return state.screen === 'intro' ? { ...state, screen: 'question' } : state
     case 'answer': {
-      if (state.screen !== 'question' || state.index !== action.questionIndex || state.selected === questions[state.index]?.correctAnswer || !Number.isInteger(action.option) || action.option < 0 || action.option > 3) return state
+      // One answer per question: a wrong answer locks the question until the run is rewound to question 1.
+      if (state.screen !== 'question' || state.index !== action.questionIndex || state.selected !== null || !Number.isInteger(action.option) || action.option < 0 || action.option > 3) return state
       return { ...state, selected: action.option }
     }
     case 'next': {
       if (state.screen !== 'question' || action.questionIndex !== state.index || state.selected !== questions[state.index]?.correctAnswer) return state
       if (state.index === 9) return { ...state, screen: 'complete', selected: null }
       return { screen: state.index === 4 ? 'halfway' : 'question', index: state.index + 1, selected: null }
+    }
+    case 'rewind': {
+      const failed = state.screen === 'question' && state.selected !== null && state.selected !== questions[state.index]?.correctAnswer
+      return failed ? { screen: 'question', index: 0, selected: null } : state
     }
     case 'continue': return state.screen === 'halfway' ? { ...state, screen: 'question' } : state
     case 'unlock': return state.screen === 'complete' ? { ...state, screen: 'decrypt' } : state

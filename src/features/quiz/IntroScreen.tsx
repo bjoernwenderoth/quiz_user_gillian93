@@ -6,7 +6,7 @@ export function IntroScreen({ onStart }: { onStart: () => void }) {
     <div className="story-symbol"><KeyRound size={30} /></div>
     <h1>DU WURDEST<br /><span className="gold">AUSGEWÄHLT.</span></h1>
     <p className="story-lead">Zehn Fragen. Ein verborgenes Ziel.</p>
-    <p className="story-copy">Beweise dein Wissen und entschlüssele PROJECT X.<br />Nimm dir Zeit. Jeder richtige Gedanke bringt dich näher.</p>
+    <p className="story-copy">Beweise dein Wissen und entschlüssele PROJECT X.<br />Nimm dir Zeit. Jeder richtige Gedanke bringt dich näher.<br /><strong className="intro-rule">Ein falscher Schlüssel – und alles beginnt von vorn.</strong></p>
     <div className="mission-facts"><span><Check size={15} />10 Fragen</span><span><Check size={15} />Kein Zeitlimit</span><span><Check size={15} />Dein Geheimnis</span></div>
     <AnimatedButton onClick={onStart}>RÄTSEL STARTEN <ArrowRight size={17} /></AnimatedButton>
   </ScreenTransition>

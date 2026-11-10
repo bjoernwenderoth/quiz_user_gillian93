@@ -42,7 +42,7 @@ export function App() {
         {state.screen === 'login' && <LoginScreen key="login" onLogin={() => dispatch({ type: 'login' })} />}
         {state.screen === 'identity' && <IdentityScreen key="identity" onComplete={verified} />}
         {state.screen === 'intro' && <IntroScreen key="intro" onStart={() => dispatch({ type: 'start' })} />}
-        {state.screen === 'question' && <QuestionScreen key={state.index} question={questions[state.index]!} index={state.index} selected={state.selected} onAnswer={(option) => dispatch({ type: 'answer', option, questionIndex: state.index })} onNext={next} />}
+        {state.screen === 'question' && <QuestionScreen key={state.index} question={questions[state.index]!} index={state.index} selected={state.selected} onAnswer={(option) => dispatch({ type: 'answer', option, questionIndex: state.index })} onNext={next} onRewind={() => dispatch({ type: 'rewind' })} />}
         {state.screen === 'halfway' && <HalfwayScreen key="halfway" onContinue={() => dispatch({ type: 'continue' })} />}
         {state.screen === 'complete' && <CompletionScreen key="complete" onUnlock={unlock} />}
         {state.screen === 'decrypt' && <FinaleSequence key="decrypt" onComplete={revealed} />}
@@ -56,7 +56,7 @@ export function App() {
       <a className="footer-credit" href="https://bjoern-wenderoth.de" target="_blank" rel="noopener noreferrer" aria-label="Creative & Code – bjoern-wenderoth.de (öffnet in neuem Tab)"><img src={assetUrl('images/creativeandcode-logo.png')} alt="" width="474" height="283" /></a>
       <div className="footer-right">
       {state.screen !== 'login' && <button className="text-button" onClick={restart}>Neu beginnen <ArrowUpRight size={14} /></button>}
-      <details className="help"><summary aria-label="So funktioniert PROJECT X"><HelpCircle size={17} /><span>Hinweise</span></summary><div className="help-content"><button type="button" className="help-close" aria-label="Hinweise schließen" onClick={closeHelp}><X size={16} /></button><strong>Dein Zugang zu PROJECT X.</strong><p>Melde dich mit der E-Mail-Adresse und dem Passwort aus deiner persönlichen Einladung an. Der Zugang ist nur für dich bestimmt.</p><p>Zehn Fragen. Kein Zeitlimit. Falsche Antworten kannst du erneut versuchen. Dein Fortschritt wird für diese Sitzung gespeichert.</p><p>Probleme beim Login? Wende dich an die Person, von der du deine Einladung erhalten hast.</p></div></details>
+      <details className="help"><summary aria-label="So funktioniert PROJECT X"><HelpCircle size={17} /><span>Hinweise</span></summary><div className="help-content"><button type="button" className="help-close" aria-label="Hinweise schließen" onClick={closeHelp}><X size={16} /></button><strong>Dein Zugang zu PROJECT X.</strong><p>Melde dich mit der E-Mail-Adresse und dem Passwort aus deiner persönlichen Einladung an. Der Zugang ist nur für dich bestimmt.</p><p>Zehn Fragen. Kein Zeitlimit. Aber Vorsicht: Eine falsche Antwort schickt dich zurück zu Frage 1. Dein Fortschritt wird für diese Sitzung gespeichert.</p><p>Probleme beim Login? Wende dich an die Person, von der du deine Einladung erhalten hast.</p></div></details>
     </div>
     </footer>
   </div>

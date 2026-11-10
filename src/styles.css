@@ -142,6 +142,12 @@ main { flex: 1; display: flex; flex-direction: column; justify-content: center; 
 .question-bottom > p { font-size: 12px; line-height: 1.7; }
 .question-bottom .primary-button { margin-top: 18px; width: 100%; justify-content: space-between; }
 .feedback-correct { color: var(--color-positive); }
+.is-failed .answer-option:not(.is-wrong) { opacity: 0.4; }
+.fail-panel { margin-top: 4px; padding: 18px 18px 20px; border: 1px solid var(--color-wrong-border); border-radius: var(--radius-card); background: var(--color-wrong-surface); scroll-margin-bottom: 24px; }
+.fail-title { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--color-wrong-ink); }
+.fail-copy { margin-top: 8px; font-size: 14px; line-height: 1.6; color: var(--color-wrong-ink); opacity: 0.85; }
+.question-bottom .fail-panel .primary-button { margin-top: 16px; width: 100%; justify-content: center; }
+.intro-rule { display: inline-block; margin-top: 10px; color: var(--color-negative); font-weight: 500; }
 .feedback-wrong { color: var(--color-negative); }
 .app-shell::before { content: ''; position: fixed; inset: 0; z-index: -1; background: #0b0d0c; opacity: 0; transition: opacity 700ms var(--ease-out); pointer-events: none; }
 .app-shell[data-screen="complete"]::before, .app-shell[data-screen="decrypt"]::before { opacity: 1; }
@@ -164,11 +170,13 @@ main { flex: 1; display: flex; flex-direction: column; justify-content: center; 
 .final-question.is-resolved .answer-option.is-correct::after { content: ''; position: absolute; inset: auto 0 0; height: 2px; background: var(--color-positive); transform-origin: left; animation: key-accepted 850ms var(--ease-out) both; }
 @keyframes key-accepted { from { transform: scaleX(0); opacity: 0; } to { transform: scaleX(1); opacity: 1; } }
 .final-question.is-resolved .answer-option.is-correct .answer-text { text-transform: uppercase; letter-spacing: 0.04em; }
-.site-footer { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 20px; min-height: 78px; border-top: 1px solid var(--color-line); color: var(--color-muted); font-size: 10px; padding-block: 15px max(15px, env(safe-area-inset-bottom)); }
+.site-footer { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 20px; min-height: 78px; border-top: 1px solid var(--color-line); color: var(--color-muted); font-size: 10px; padding-block: 15px max(15px, env(safe-area-inset-bottom)); }
 .footer-divider { margin-inline: 12px; color: #6d725f; }
 .footer-credit { display: flex; justify-content: center; align-items: center; min-height: 44px; opacity: 0.6; transition: opacity 150ms; }
-.footer-right { justify-self: end; }
-.footer-credit img { display: block; height: 48px; width: auto; }
+.footer-right { justify-self: end; min-width: 0; justify-content: flex-end; row-gap: 0; }
+.footer-credit { min-width: max-content; }
+/* Safari collapses an auto-width image in an auto grid column: fix its proportions explicitly. */
+.footer-credit img { display: block; height: 48px; width: auto; aspect-ratio: 474 / 283; flex-shrink: 0; }
 @media (hover: hover) { .footer-credit:hover { opacity: 1; } }
 .footer-credit:focus-visible { opacity: 1; }
 .footer-right { display: flex; align-items: center; gap: 24px; }
@@ -247,7 +255,7 @@ main { flex: 1; display: flex; flex-direction: column; justify-content: center; 
   .site-footer > span { max-width: 175px; line-height: 1.8; }
   .footer-divider { margin-inline: 6px; }
   .footer-right { gap: 12px; }
-  .footer-right .text-button { font-size: 10px; }
+  .footer-right .text-button { font-size: 10px; white-space: normal; max-width: 72px; line-height: 1.35; }
   .footer-credit img { height: 36px; }
   .help summary { min-width: 44px; }
   .help summary > span { display: none; }
@@ -257,6 +265,10 @@ main { flex: 1; display: flex; flex-direction: column; justify-content: center; 
   .header-access svg { display: none; }
   .art-coordinate { font-size: 7px; }
   .site-footer > span { max-width: 140px; }
+  .site-footer { gap: 10px; }
+  .footer-right { gap: 2px; flex-wrap: wrap; }
+  .help summary { min-width: 34px; }
+  .footer-right .text-button svg { display: none; }
   .footer-credit img { height: 32px; }
 }
 /* ───────────── Berlin lebt 3 world: black/red, switched on at the unlock ───────────── */

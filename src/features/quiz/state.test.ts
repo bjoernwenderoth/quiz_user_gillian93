@@ -12,19 +12,24 @@ describe('PROJECT X progression', () => {
     expect(quizReducer(initialState, { type: 'unlock' })).toBe(initialState)
     expect(quizReducer(start(), { type: 'revealed' }).screen).toBe('question')
   })
-  it('keeps wrong answers retryable, locks correct answers and ignores stale events', () => {
+  it('locks a question after one answer, rewinds wrong answers to question 1 and ignores stale events', () => {
     const state = start()
-    const wrong = quizReducer(state, { type: 'answer', option: 0, questionIndex: 0 })
-    expect(quizReducer(wrong, { type: 'next', questionIndex: 0 })).toBe(wrong)
-    expect(quizReducer(wrong, { type: 'answer', option: 1, questionIndex: 0 }).selected).toBe(1)
-    for (const option of [-1, 4, 1.5, NaN]) expect(quizReducer(wrong, { type: 'answer', option, questionIndex: 0 })).toBe(wrong)
-    expect(quizReducer(wrong, { type: 'answer', option: 2, questionIndex: 1 })).toBe(wrong)
-    const right = quizReducer(wrong, { type: 'answer', option: 2, questionIndex: 0 })
+    for (const option of [-1, 4, 1.5, NaN]) expect(quizReducer(state, { type: 'answer', option, questionIndex: 0 })).toBe(state)
+    expect(quizReducer(state, { type: 'answer', option: 0, questionIndex: 1 })).toBe(state)
+    expect(quizReducer(state, { type: 'rewind' })).toBe(state)
+    const right = quizReducer(state, { type: 'answer', option: questions[0]!.correctAnswer, questionIndex: 0 })
     expect(quizReducer(right, { type: 'answer', option: 0, questionIndex: 0 })).toBe(right)
-    const next = quizReducer(right, { type: 'next', questionIndex: 0 })
+    expect(quizReducer(right, { type: 'rewind' })).toBe(right)
+    let next = quizReducer(right, { type: 'next', questionIndex: 0 })
     expect(next.index).toBe(1)
     expect(quizReducer(next, { type: 'next', questionIndex: 0 })).toBe(next)
-    expect(quizReducer(next, { type: 'answer', option: 2, questionIndex: 0 })).toBe(next)
+    // A wrong answer on question 3 locks it and sends the run back to question 1.
+    next = quizReducer(quizReducer(next, { type: 'answer', option: questions[1]!.correctAnswer, questionIndex: 1 }), { type: 'next', questionIndex: 1 })
+    const wrongOption = (questions[2]!.correctAnswer + 1) % 4
+    const wrong = quizReducer(next, { type: 'answer', option: wrongOption, questionIndex: 2 })
+    expect(quizReducer(wrong, { type: 'answer', option: questions[2]!.correctAnswer, questionIndex: 2 })).toBe(wrong)
+    expect(quizReducer(wrong, { type: 'next', questionIndex: 2 })).toBe(wrong)
+    expect(quizReducer(wrong, { type: 'rewind' })).toEqual({ screen: 'question', index: 0, selected: null })
   })
   it('pauses at halfway and requires an explicit unlock before the reveal', () => {
     let state: QuizState = start()
@@ -59,7 +64,7 @@ describe('PROJECT X progression', () => {
   it('provides ten distinct four-answer questions and the requested solutions', () => {
     expect(questions).toHaveLength(10)
     expect(new Set(questions.map((question) => question.id)).size).toBe(10)
-    expect(questions.map((q) => q.answers[q.correctAnswer])).toEqual(['Einstand', 'Maske', '14', 'Orgrimmar', 'Guanciale', 'Papaplatte', 'Aykut Anhan', 'Albatross', 'Wrath of the Lich King', 'Berlin lebt'])
+    expect(questions.map((q) => q.answers[q.correctAnswer])).toEqual(['Einstand', 'Maske', 'Orgrimmar', 'Guanciale', 'Mario Götze', 'Papaplatte', 'The Voice', 'Aykut Anhan', 'Albatross', 'Berlin lebt'])
     questions.forEach((q) => { expect(new Set(q.answers).size).toBe(4); expect(q.image).toMatch(/\.jpg$/) })
   })
 })

@@ -42,21 +42,30 @@ test('complete private journey, retries, recovery, reveal and real PNG download'
     const image = page.locator('.question-image img')
     await expect(image).toBeVisible()
     await expect.poll(() => image.evaluate((node) => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
-    if (index === 0) {
-      await capture(page, `${info.project.name}-question`)
-      await page.getByRole('button', { name: 'A: Breakpoint', exact: true }).click()
-      await expect(page.getByRole('status')).toContainText('Versuch es noch einmal')
-      await expect(page.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '0')
+    if (index === 0) await capture(page, `${info.project.name}-question`)
+    if (index === 1) {
+      // A wrong answer locks the question and sends the run back to question 1.
+      const wrong = (question.correctAnswer + 1) % 4
+      await page.getByRole('button', { name: `${String.fromCharCode(65 + wrong)}: ${question.answers[wrong]}`, exact: true }).click()
+      await expect(page.getByRole('alert')).toContainText('Leider falsch')
+      await expect(page.getByRole('button', { name: `${String.fromCharCode(65 + question.correctAnswer)}: ${question.answers[question.correctAnswer]}`, exact: true })).toHaveAttribute('aria-disabled', 'true')
       await expect(page.getByRole('button', { name: 'NÄCHSTE FRAGE' })).toHaveCount(0)
       await capture(page, `${info.project.name}-wrong`)
       await page.reload()
-      await expect(page.getByRole('status')).toContainText('Versuch es noch einmal')
+      await expect(page.getByRole('alert')).toContainText('Leider falsch')
+      await page.getByRole('button', { name: 'VON VORNE BEGINNEN' }).click()
+      await expect(page.getByRole('heading', { name: questions[0]!.question, exact: true })).toBeVisible()
+      await expect(page.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '0')
+      const first = questions[0]!
+      await page.getByRole('button', { name: `${String.fromCharCode(65 + first.correctAnswer)}: ${first.answers[first.correctAnswer]}`, exact: true }).click()
+      await page.getByRole('button', { name: 'NÄCHSTE FRAGE' }).click()
+      await expect(page.getByRole('heading', { name: question.question, exact: true })).toBeVisible()
     }
     await page.getByRole('button', { name: `${String.fromCharCode(65 + question.correctAnswer)}: ${question.answers[question.correctAnswer]}`, exact: true }).click()
     await expect(page.getByRole('status')).toContainText('Genau richtig')
     await expect(page.getByRole('progressbar')).toHaveAttribute('aria-valuenow', String(index + 1))
     if (index === 9) {
-      await expect(page.getByRole('button', { name: 'A: Berlin bei Nacht', exact: true })).toHaveAttribute('aria-disabled', 'true')
+      await expect(page.getByRole('button', { name: 'D: Berlin bei Nacht', exact: true })).toHaveAttribute('aria-disabled', 'true')
       await expect(page.locator('body')).not.toContainText('2 KONZERTTICKETS')
     } else {
       await page.getByRole('button', { name: 'NÄCHSTE FRAGE' }).click()
@@ -137,11 +146,13 @@ test('keyboard, reduced motion, blocked storage, and narrow layouts', async ({ p
   // Safari's Tab key skips buttons by default (system setting), so the Tab step runs elsewhere.
   if (browserName !== 'webkit') {
     await page.keyboard.press('Tab')
-    await expect(page.getByRole('button', { name: 'A: Breakpoint' })).toBeFocused()
+    await expect(page.getByRole('button', { name: 'A: Tie-Break' })).toBeFocused()
   }
-  await page.getByRole('button', { name: 'A: Breakpoint' }).press('Enter')
-  await expect(page.getByRole('status')).toContainText('Versuch es noch einmal')
-  await page.getByRole('button', { name: 'C: Einstand' }).press('Enter')
+  await page.getByRole('button', { name: 'A: Tie-Break' }).press('Enter')
+  await expect(page.getByRole('alert')).toContainText('Leider falsch')
+  await page.getByRole('button', { name: 'VON VORNE BEGINNEN' }).press('Enter')
+  await expect(page.getByRole('heading', { name: questions[0]!.question })).toBeVisible()
+  await page.getByRole('button', { name: 'B: Einstand' }).press('Enter')
   await expect(page.getByRole('status')).toContainText('Genau richtig')
   await page.getByLabel('So funktioniert PROJECT X').click()
   await expect(page.getByText('Dein Zugang zu PROJECT X.')).toBeVisible()
@@ -202,7 +213,7 @@ test('all phone widths, final-key timing, image fallback and export failure', as
   await page.route('**/images/questions/**', (route) => route.abort())
   await page.evaluate(() => sessionStorage.setItem('project-x:progress:v1', JSON.stringify({ screen: 'question', index: 9, selected: null })))
   await page.reload()
-  await page.getByRole('button', { name: 'C: Berlin lebt', exact: true }).press('Enter')
+  await page.getByRole('button', { name: 'B: Berlin lebt', exact: true }).press('Enter')
   await expect(page.getByRole('heading', { name: /SCHLÜSSEL/ })).toBeFocused()
   await expect(page.getByRole('button', { name: 'GEWINN FREISCHALTEN' })).toBeEnabled()
   await expect(page.locator('body')).not.toContainText('KONZERTTICKETS')

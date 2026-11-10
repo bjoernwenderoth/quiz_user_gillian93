@@ -6,6 +6,8 @@ Die Ansicht entsättigt und verdunkelt zusätzlich alle Bilder gleich (`.questio
 
 `city.jpg` dient außerdem als Hintergrund des Konzertmotivs im Finale.
 
+`football.jpg`: Unsplash (lizenzfrei), https://unsplash.com/photos/1522778119026-d647f0596c20 — `kool-savas.jpg`: vom Projektinhaber bereitgestellt (Original in `media-src/`).
+
 Beim Austausch: gleiche Dateinamen verwenden, möglichst mindestens 1200 px breit und im Querformat.
 Alternativtexte und optional `imagePosition` stehen in `src/features/quiz/content.ts`.
 

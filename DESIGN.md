@@ -48,7 +48,7 @@ Das Finale zeigt auf Desktop das Tourmotiv links und die Widmung/Veranstaltung r
 - Gemeinsames Easing: `cubic-bezier(0.22, 1, 0.36, 1)`.
 - Screens: 320 ms, 12 px Eintritt und 6 px Austritt, opacity und transform.
 - Drücken: Buttons Scale 0,97, breite Antwortkarten 0,985 (`press` in `motion.ts`), Spring 300 ms ohne Bounce.
-- Falsche Antwort: einmaliger, gedämpfter Seitenimpuls (±5 px, 360 ms, `wrongNudge`), zusätzlich Peach-Farbe, Kreuz und Text.
+- Falsche Antwort: einmaliger, gedämpfter Seitenimpuls (±5 px, 360 ms, `wrongNudge`), Peach-Farbe, Kreuz; alle Antworten gesperrt, darunter der Hinweis „Leider falsch“ mit „VON VORNE BEGINNEN“ (zurück zu Frage 1).
 - Hover-Zustände nur auf Geräten mit echtem Hover (`@media (hover: hover)`), damit auf Touchscreens nichts „hängen bleibt“.
 - Dramaturgie: Ab Frage 8 dunkelt der Hintergrund leicht ab (`data-stage="late"`), bei Frage 10 stärker (`"final"`).
 - Login: einmaliger Lichtaufbau hinter dem X (2,4 s), keine Schleife.
